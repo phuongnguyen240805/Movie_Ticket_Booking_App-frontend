@@ -1,13 +1,21 @@
-import Navbar from "@/components/Navbar/Navbar";
-import Footer from "@/components/Footer/Footer";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+
+import { useLocation } from "react-router";
+import { Toaster } from "react-hot-toast";
 
 function DefaultLayout({ children }) {
+
+    const location = useLocation();
+    const isAdminRoute = location.pathname.startsWith('/admin');
+
     return (
-        <div>
-            <Navbar />
+        <>
+            <Toaster />
+            {!isAdminRoute && <Navbar />}
             {children}
-            <Footer />
-        </div>
+            {!isAdminRoute && <Footer />}
+        </>
     );
 }
 

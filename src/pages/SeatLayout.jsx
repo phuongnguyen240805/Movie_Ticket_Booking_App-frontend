@@ -1,7 +1,7 @@
 function SeatLayout() {
     return (
         <div>
-
+            
         </div>
     );
 }

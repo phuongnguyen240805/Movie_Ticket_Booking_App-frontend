@@ -5,7 +5,7 @@ import { DefaultLayout } from "./layouts";
 
 function App() {
   return (
-    <div>
+    <>
       <Routes>
         {publicRoutes.map((route, index) => {
 
@@ -23,7 +23,7 @@ function App() {
 
         })}
       </Routes>
-    </div>
+    </>
   );
 }
 
