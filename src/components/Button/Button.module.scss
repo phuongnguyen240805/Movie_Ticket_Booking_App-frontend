@@ -1,0 +1,130 @@
+$background-default: #ffffff !default;
+$color-default: #3b3b3b !default;
+
+.disabledEvent {
+    opacity: .5;
+    user-select: none;
+    pointer-events: none;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wrapper {
+    transition: background-color 0.2s;
+    border-radius: 9999px; // rounded-full
+    font-weight: 500; // font-medium
+    cursor: pointer;
+    color: #fff;
+    border: none;
+
+    +.wrapper {
+        margin-left: 8px;
+    }
+
+    &.disabled {
+        // có mức độ ưu tiên hơn
+        @extend .disabledEvent;
+    }
+
+    &.disabledText {
+        user-select: none;
+        pointer-events: none;
+    }
+
+    @media (min-width: 640px) {
+        padding: 0.5rem 1.75rem; // sm:px-7 sm:py-2
+    }
+}
+
+.icon+.title,
+.title+.icon {
+    margin-left: 2px;
+}
+
+.title {
+    @extend .center;
+}
+
+.icon {
+    width: 20px;
+    display: inline-block;
+    text-align: center;
+}
+
+// button types
+.rounded {
+    border-radius: 999px;
+    border-color: rgba(22, 24, 35, 0.12);
+    box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
+
+    &:hover {
+        border-color: rgba(22, 24, 35, 0.2);
+        background-color: rgba(22, 24, 35, 0.03);
+    }
+}
+
+.primary {
+    padding: 0.25rem 1rem; // px-4 py-1
+    background-color: var(--color-primary, #ff385c); // bg-primary
+
+    @media (min-width: 640px) {
+        padding: 0.5rem 1.75rem; // sm:px-7 sm:py-2
+    }
+
+    &:hover {
+        background-color: var(--color-primary-dull, #e11d48); // hover:bg-primary-dull
+    }
+}
+
+.secondary {
+    background-color: rgba(22, 24, 35, 0.03);
+    padding: 0.25rem 1rem; // px-4 py-1
+
+    @media (min-width: 640px) {
+        padding: 0.5rem 1.75rem; // sm:px-7 sm:py-2
+    }
+
+    &:hover {
+        background-color: rgba(22, 24, 35, 0.05);
+    }
+}
+
+.outline {
+    color: var(--color-primary);
+    border-color: currentColor; // ăn theo màu thèn trên
+
+    &:hover {
+        border-color: currentColor;
+        background-color: rgba(254, 44, 85, 0.06);
+    }
+}
+
+.text {
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.notify {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    color: #ffffff;
+    background-color: red;
+}
+
+// button size
+.small {
+    min-width: 88px;
+    padding: 4px 16px;
+}
+
+.large {
+    min-width: 140px;
+    padding: 14px 16px;
+}
