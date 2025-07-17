@@ -14,6 +14,15 @@ export const assets = {
     profile
 }
 
+export const gallerysData = [
+    { "name": "Marvel's Ironheart", "image_path": "https://static.nutscdn.com/vimg/300-0/e29c0fe492873043f31a5128dc98255d.webp", },
+    { "name": "Doctor Strange in the Multiverse of Madness", "image_path": "https://static.nutscdn.com/vimg/300-0/5791aaaadd1b5bede4fe9af6d5c492c4.jpg", },
+    { "name": "Avengers: Infinity War", "image_path": "https://static.nutscdn.com/vimg/300-0/a596e4e43d873f368451f32a3b445acb.jpg", },
+    { "name": "Resident Playbook", "image_path": "https://static.nutscdn.com/vimg/300-0/055875f8424f76d54b2a36feaa6edc07.jpg", },
+    { "name": "M3GAN 2.0", "image_path": "https://static.nutscdn.com/vimg/300-0/9fdba340ff590a5c4038148213e25486.jpg", },
+    { "name": "KPop Demon Hunters", "image_path": "https://static.nutscdn.com/vimg/300-0/01a9b136a8df472c2718001fc3b52f98.jpg", },
+]
+
 export const dummyTrailers = [
     {
         image: "https://img.youtube.com/vi/WpW36ldAqnM/maxresdefault.jpg",

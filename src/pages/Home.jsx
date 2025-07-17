@@ -1,5 +1,5 @@
 import FeaturedSection from "@/components/FeaturedSection";
-import Footer from "@/components/Footer";
+import Gallery from "@/components/Gallery";
 import HeroSection from "@/components/HeroSection";
 import TrailersSection from "@/components/TrailersSection";
 
@@ -8,6 +8,7 @@ function Home() {
         <>
             <HeroSection />
             <FeaturedSection />
+            <Gallery />
             <TrailersSection />
         </>
     );

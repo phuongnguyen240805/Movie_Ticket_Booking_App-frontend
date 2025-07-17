@@ -1,10 +1,10 @@
 import classNames from "classnames/bind";
+import { StarIcon } from "lucide-react";
+import { useNavigate } from "react-router";
 
 import styles from './MovieCard.module.scss';
-import { useNavigate } from "react-router-dom";
 import { routesConfig } from "@/configs";
 import Button from "../Button";
-import { StarIcon } from "lucide-react";
 import timeFormat from "@/lib/timeFormat";
 
 const cx = classNames.bind(styles);

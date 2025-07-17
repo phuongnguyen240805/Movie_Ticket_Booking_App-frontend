@@ -18,7 +18,7 @@ function TrailersSection() {
             <p className="text-gray-300 font-medium text-lg mx-auto max-w-[960px]">Trailers</p>
 
             <div className="relative mt-6">
-                <BlurCircle top="-100px" right="-100px" />
+                <BlurCircle top="-40px" right="-100px" />
                 <ReactPlayer
                     src={currentTrailer.videoUrl}
                     controls={false}
@@ -32,7 +32,7 @@ function TrailersSection() {
                 {dummyTrailers.map(trailer => (
                     <div
                         key={trailer.image}
-                        className={cx('trailer-item', 'group-hover:not-hover:opacity-50')}
+                        className={cx('trailer-item')}
                         onClick={() => setCurrentTrailer(trailer)}
                     >
                         <img src={trailer.image} alt="" className="rounded-lg w-full h-full object-cover brightness-75" />

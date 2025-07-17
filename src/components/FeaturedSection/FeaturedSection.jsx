@@ -32,7 +32,7 @@ function FeaturedSection() {
                 ))}
             </div>
 
-            <div className="flex justify-center mt-20">
+            <div className="flex justify-center mt-14 pb-20">
                 <Button
                     primary
                     onClick={() => navigate(routesConfig.moviesPage)}
