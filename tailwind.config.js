@@ -8,7 +8,8 @@ export default {
         extend: {
             colors: {
                 primary: '#4F46E5',
-                'primary-dull': '#4338CA'
+                'primary-dull': '#4338CA',
+                'black-transparent': 'rgba(0, 0, 0, 0.7)',
             },
         },
     },

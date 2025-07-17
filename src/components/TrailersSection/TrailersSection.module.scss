@@ -1,0 +1,35 @@
+.trailers-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+    max-width: 48rem;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (min-width: 768px) {
+        gap: 2rem;
+    }
+}
+
+.trailer-item {
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+        transform: translateY(-0.25rem);
+    }
+
+    .trailers-list:hover &:not(:hover) {
+        opacity: 0.5;
+    }
+
+    @media (max-width: 768px) {
+        height: 15rem;
+    }
+
+    @media (min-width: 768px) {
+        max-height: 15rem;
+    }
+}

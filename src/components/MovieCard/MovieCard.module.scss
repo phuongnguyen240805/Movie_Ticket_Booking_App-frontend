@@ -1,0 +1,27 @@
+.wrapper {
+    // width: 66;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem; 
+    background-color: #1f2937; 
+    border-radius: 0.5rem; 
+
+    &:hover {
+        transform: translateY(-1px); 
+        transition: transform 300ms; 
+    }
+}
+
+.img {
+    border-radius: 0.5rem; 
+    height: 13rem; 
+    width: 100%; 
+    object-fit: cover; 
+    object-position: right bottom; 
+    cursor: pointer; 
+
+    &:hover {
+        opacity: 0.9; 
+    }
+}

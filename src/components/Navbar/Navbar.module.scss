@@ -1,8 +1,13 @@
 // Biến màu sắc
 $primary: var(--color-primary, #ff385c);
 $primary-dull: var(--color-primary-dull, #e11d48);
-$menu-bg-mobile: rgba(0, 0, 0, 0.7);
-$menu-bg-desktop: rgba(255, 255, 255, 0.1);
+$menu-bg-mobile: var(--menu-bg-mobile);
+$menu-bg-desktop: var(--menu-bg-desktop);
+
+.bg {
+    background-color: $menu-bg-mobile;
+    transition: background-color .2s ease-out;
+}
 
 .menu-container {
     height: 50px;

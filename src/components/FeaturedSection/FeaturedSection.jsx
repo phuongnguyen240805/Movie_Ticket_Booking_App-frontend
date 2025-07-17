@@ -1,8 +1,11 @@
 import { routesConfig } from "@/configs";
 import Button from "@/components/Button";
+import BlurCircle from "../BlurCircle";
 
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { dummyShowsData } from "@/assets/assets";
+import MovieCard from "../MovieCard";
 
 function FeaturedSection() {
 
@@ -12,6 +15,7 @@ function FeaturedSection() {
         <div className="px-6 md:px-16 ls:px-24 xl:px-44 overflow-hidden">
 
             <div className="relative flex items-center justify-between pt-20 pb-10">
+                <BlurCircle top="0" right="-80px" />
                 <p className="text-gray-300 font-medium text-lg">Now Showing</p>
                 <Button
                     secondary
@@ -19,6 +23,21 @@ function FeaturedSection() {
                     rightIcon={<ArrowRight className="group-hover:translate-x-0.5 transition w-5 h-5" />}
                     className="group flex items-center gap-2 text-gray-300 text-sm">
                     View All
+                </Button>
+            </div>
+
+            <div className="flex flex-wrap max-sm:justify-center gap-8 mt-8">
+                {dummyShowsData.slice(0, 4).map(show => (
+                    <MovieCard key={show._id} movie={show} />
+                ))}
+            </div>
+
+            <div className="flex justify-center mt-20">
+                <Button
+                    primary
+                    onClick={() => navigate(routesConfig.moviesPage)}
+                >
+                    Show more
                 </Button>
             </div>
         </div>
