@@ -2,10 +2,11 @@ const routes = {
     homePage: '/',
     moviesPage: '/movies',
     movieDetailsPage: '/movie/:id',
-    movieDetailsPageGenerator: (id) => `/movie/${id}`,
     seatLayoutPage: '/movie/:id/:date',
     myBookingsPage: '/my-bookings',
-    favoritePage: '/favorite',
+    favoritePage: '/favorites',
+    movieDetailsPageGenerator: (id) => `/movie/${id}`,
+    seatLayoutPageGenerator: (id, date) => `/movie/${id}/${date}`,
 }
 
 export default routes;
