@@ -1,20 +1,26 @@
 import { dummyDateTimeData, dummyShowsData } from "@/assets/assets";
 import BlurCircle from "@/components/BlurCircle";
+import Button from "@/components/Button";
 import DateSelect from "@/components/DateSelect";
 import Loading from "@/components/Loading";
 import MovieCard from "@/components/MovieCard";
 import { routesConfig } from "@/configs";
 import timeFormat from "@/lib/timeFormat";
+import styles from "./MovieDetails.module.scss";
 
+import classNames from "classnames/bind";
 import { Heart, PlayCircleIcon, StarIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
+
+const cx = classNames.bind(styles);
 
 function MovieDetails() {
 
     const navigate = useNavigate();
     const { id } = useParams();
     const [show, setShow] = useState();
+    const [active, setActive] = useState(false);
 
     // tìm film bằng id
     const getShowHandler = async () => {
@@ -54,20 +60,26 @@ function MovieDetails() {
                     </p>
 
                     <div className="flex items-center flex-wrap gap-4 mt-4">
-                        <button className="flex items-center gap-2 px-7 py-3 text-sm bg-gray-800 
-                        hover:bg-gray-900 transition rounded-md font-medium cursor-pointer active:scale-95">
-                            <PlayCircleIcon className="w-5 h-5" />
+                        <Button
+                            secondary
+                            leftIcon={<PlayCircleIcon className="w-5 h-5" />}
+                            className="px-7 py-3 text-sm transition active:scale-95">
                             Watch Trailer
-                        </button>
-                        <a
+                        </Button>
+
+                        <Button
+                            primary
                             href="#dateSelect"
-                            className="px-10 py-3 text-sm bg-primary hover:bg-primary-dull 
-                            transition rounded-md font-medium cursor-pointer active:scale-95">
+                            className={cx("btn-ticket", "px-10 py-3 text-sm transition active:scale-95")}>
                             Buy Tickets
-                        </a>
-                        <button className="h-10 flex items-center justify-center bg-gray-700 px-2.5 rounded-full transition cursor-pointer active:scale-95">
-                            <Heart className={`w-5 h-5`} />
-                        </button>
+                        </Button>
+
+                        <Button
+                            rounded
+                            onClick={() => setActive(!active)}
+                            className="h-11 w-11 px-2.5 transition active:scale-95">
+                            <Heart className={`w-5 h-5 ${active && 'text-primary'}`} />
+                        </Button>
                     </div>
 
                 </div>
@@ -93,13 +105,15 @@ function MovieDetails() {
                     <MovieCard key={index} movie={movie} />
                 ))}
             </div>
+
             <div className="flex justify-center mt-20">
-                <button
-                    className="px-10 py-3 text-sm bg-primary hover:bg-primary-dull transition rounded-md font-medium cursor-pointer"
+                <Button
+                    primary
+                    className="px-10 py-3 transition active:scale-95"
                     onClick={() => navigate(routesConfig.moviesPage)}
                 >
                     Show more
-                </button>
+                </Button>
             </div>
 
         </div>

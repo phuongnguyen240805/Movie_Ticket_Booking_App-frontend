@@ -1,10 +1,15 @@
 import { useState } from 'react';
 import BlurCircle from '../BlurCircle';
 import { routesConfig } from '@/configs';
+import Button from '../Button';
+import styles from "./DateSelect.module.scss";
 
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router';
+import classNames from 'classnames/bind';
+
+const cx = classNames.bind(styles);
 
 const DateSelect = ({ dateTime, id }) => {
 
@@ -47,9 +52,12 @@ const DateSelect = ({ dateTime, id }) => {
                     </div>
                 </div>
 
-                <button
+                <Button
+                    primary
                     onClick={onBookHandler}
-                    className='bg-primary text-white px-8 py-2 mt-6 rounded hover:bg-primary/90 transition-all cursor-pointer'>Book Now</button>
+                    className={cx('btn-ticket', 'px-8 py-2 mt-10 transition-all active:scale-95')}>
+                    Book Now
+                </Button>
             </div>
         </div>
     );

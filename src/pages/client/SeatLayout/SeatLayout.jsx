@@ -1,5 +1,6 @@
 import { assets, dummyDateTimeData, dummyShowsData } from "@/assets/assets";
 import BlurCircle from "@/components/BlurCircle";
+import Button from "@/components/Button";
 import Loading from "@/components/Loading";
 import { routesConfig } from "@/configs";
 import { isoTimeFormat } from "@/lib/isoTimeFormat";
@@ -114,14 +115,14 @@ function SeatLayout() {
                     ))}
                 </div>
 
-                <button
+                <Button
+                    primary
+                    rightIcon={<ArrowRightIcon strokeWidth={3} className="w-4 h-4 transition group-hover:translate-x-0.5" />}
+                    className="group gap-1 mt-20 px-10 py-3 transition active:scale-95"
                     onClick={() => navigate(routesConfig.myBookingsPage)}
-                    className="flex items-center gap-1 mt-20 px-10 py-3 text-sm bg-primary hover:bg-primary-dull 
-                transition rounded-full font-medium cursor-pointer active:scale-95"
                 >
                     Proceed to Checkout
-                    <ArrowRightIcon strokeWidth={3} className="w-4 h-4" />
-                </button>
+                </Button>
             </div>
 
         </div>

@@ -31,10 +31,12 @@ function MovieCard({ movie }) {
             <div className="flex items-center justify-between mt-4 pb-3">
                 <Button
                     primary
+                    className="text-sm transition active:scale-95"
                     onClick={() => navigate(routesConfig.movieDetailsPageGenerator(movie._id))}
                 >
                     Buy Tickets
                 </Button>
+
                 <p className="flex items-center gap-1 text-sm text-gray-400 mt-1 pr-1">
                     <StarIcon className="w-4 h-4 text-primary fill-primary" />
                     {movie.vote_average.toFixed(1)}

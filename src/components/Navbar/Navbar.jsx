@@ -95,7 +95,12 @@ function Navbar() {
                 <SearchIcon className='max-md:hidden w-6 h-6 cursor-pointer' />
                 {
                     !user ? (
-                        <Button primary onClick={handleLogin}>Login</Button>
+                        <Button
+                            primary
+                            className="h-10 w-20 transition active:scale-95"
+                            onClick={handleLogin}>
+                            Login
+                        </Button>
                     ) : (
                         <UserButton>
                             <UserButton.MenuItems>

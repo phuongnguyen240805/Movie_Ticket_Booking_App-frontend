@@ -6,10 +6,7 @@ function BlurCircle({
 }) {
     return (
         <div className="absolute -z-50 h-58 w-58 aspect-square rounded-full blur-3xl bg-primary/30"
-            style={{ top: top, bottom: bottom, left: left, right: right }}
-        >
-
-        </div>
+            style={{ top: top, bottom: bottom, left: left, right: right }}></div>
     );
 }
 

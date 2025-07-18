@@ -1,4 +1,8 @@
-import { HomePage, MovieDetailsPage, MoviesPage, MyBookingsPage, FavoritePage, SeatLayoutPage } from "@/pages";
+import {
+    HomePage, MovieDetailsPage, MoviesPage,
+    MyBookingsPage, FavoritePage, SeatLayoutPage
+} from "@/pages/client";
+import { DashboardPage, AddShowsPage, ListBookingsPage, ListShowsPage } from "@/pages/admin";
 import { routesConfig } from "@/configs";
 
 // public routes
@@ -11,10 +15,12 @@ const publicRoutes = [
     { path: routesConfig.seatLayoutPage, component: SeatLayoutPage },
 ]
 
-
 // private routes
 const privateRoutes = [
-    // config routes
+    { path: routesConfig.dashboardPage, component: DashboardPage },
+    { path: routesConfig.addShowsPage, component: AddShowsPage },
+    { path: routesConfig.listBookingsPage, component: ListBookingsPage },
+    { path: routesConfig.listShowsPage, component: ListShowsPage },
 ]
 
 export { publicRoutes, privateRoutes }

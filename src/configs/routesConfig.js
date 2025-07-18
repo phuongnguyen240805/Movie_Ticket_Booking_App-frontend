@@ -1,4 +1,5 @@
 const routes = {
+    // client
     homePage: '/',
     moviesPage: '/movies',
     movieDetailsPage: '/movie/:id',
@@ -7,6 +8,12 @@ const routes = {
     favoritePage: '/favorites',
     movieDetailsPageGenerator: (id) => `/movie/${id}`,
     seatLayoutPageGenerator: (id, date) => `/movie/${id}/${date}`,
+
+    // admin
+    dashboardPage: '',
+    addShowsPage: '',
+    listBookingsPage: '',
+    listShowsPage: '',
 }
 
 export default routes;
