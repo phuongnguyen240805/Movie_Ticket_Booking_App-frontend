@@ -10,10 +10,11 @@ const routes = {
     seatLayoutPageGenerator: (id, date) => `/movie/${id}/${date}`,
 
     // admin
-    dashboardPage: '',
-    addShowsPage: '',
-    listBookingsPage: '',
-    listShowsPage: '',
+    admin: '/admin',
+    dashboardPage: '/admin',
+    addShowsPage: '/admin/add-shows',
+    listBookingsPage: '/admin/list-bookings',
+    listShowsPage: '/admin/list-shows',
 }
 
 export default routes;
