@@ -16,6 +16,7 @@ function Button({
     disabled = false,
     disabledText = false,
     rounded = false,
+    rounded_sm = false,
     // button size
     small = false,
     large = false,
@@ -60,6 +61,7 @@ function Button({
         disabled,
         disabledText,
         rounded,
+        rounded_sm,
         small,
         large
     })
@@ -84,6 +86,7 @@ Button.propTypes = {
     outline: PropTypes.bool,
     disabled: PropTypes.bool,
     rounded: PropTypes.bool,
+    rounded_sm: PropTypes.bool,
     small: PropTypes.bool,
     large: PropTypes.bool,
     className: PropTypes.string,

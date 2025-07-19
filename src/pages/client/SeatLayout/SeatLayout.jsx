@@ -118,7 +118,7 @@ function SeatLayout() {
                 <Button
                     primary
                     rightIcon={<ArrowRightIcon strokeWidth={3} className="w-4 h-4 transition group-hover:translate-x-0.5" />}
-                    className="group gap-1 mt-20 px-10 py-3 transition active:scale-95"
+                    className="group gap-1 mt-20 px-10 py-3 "
                     onClick={() => navigate(routesConfig.myBookingsPage)}
                 >
                     Proceed to Checkout

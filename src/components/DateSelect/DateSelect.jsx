@@ -2,16 +2,15 @@ import { useState } from 'react';
 import BlurCircle from '../BlurCircle';
 import { routesConfig } from '@/configs';
 import Button from '../Button';
-import styles from "./DateSelect.module.scss";
 
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router';
-import classNames from 'classnames/bind';
-
-const cx = classNames.bind(styles);
+import PropTypes from 'prop-types';
 
 const DateSelect = ({ dateTime, id }) => {
+
+    console.log(dateTime, id);
 
     const navigate = useNavigate();
     const [selected, setSelected] = useState(null);
@@ -33,7 +32,8 @@ const DateSelect = ({ dateTime, id }) => {
                 <div>
                     <p className='text-lg font-semibold'>Choose Date</p>
                     <div className='flex items-center gap-6 text-sm mt-5'>
-                        <ChevronLeftIcon width={28} />
+                        <Button ><ChevronLeftIcon width={28} /></Button>
+
                         <span className='grid grid-cols-3 md:flex flex-wrap md:max-w-lg gap-4'>
                             {Object.keys(dateTime).map((date) => (
                                 <button
@@ -48,19 +48,26 @@ const DateSelect = ({ dateTime, id }) => {
                                 </button>
                             ))}
                         </span>
-                        <ChevronRightIcon width={28} />
+
+                        <Button><ChevronRightIcon width={28} /></Button>
                     </div>
                 </div>
 
                 <Button
                     primary
+                    rounded_sm
                     onClick={onBookHandler}
-                    className={cx('btn-ticket', 'px-8 py-2 mt-10 transition-all active:scale-95')}>
+                    className="px-8 py-2 mt-10">
                     Book Now
                 </Button>
             </div>
         </div>
     );
 };
+
+DateSelect.propTypes = {
+    dateTime: PropTypes.object.isRequired,
+    id: PropTypes.string.isRequired,
+}
 
 export default DateSelect;

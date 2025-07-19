@@ -35,6 +35,10 @@ $color-default: #3b3b3b !default;
         user-select: none;
         pointer-events: none;
     }
+
+    &:active {
+        transform: scale(.95);
+    }
 }
 
 .icon+.title,
@@ -56,6 +60,10 @@ $color-default: #3b3b3b !default;
 .rounded {
     border-radius: 9999px;
     background-color: #374151;
+}
+
+.rounded_sm {
+    border-radius: 0.5rem;
 }
 
 .primary {

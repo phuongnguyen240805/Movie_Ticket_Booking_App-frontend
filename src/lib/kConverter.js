@@ -1,0 +1,1 @@
+export const kConverter = (num) => num > 1000 ? (num / 1000).toFixed(1) + "k" : num;

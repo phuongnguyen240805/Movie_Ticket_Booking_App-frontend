@@ -63,21 +63,21 @@ function MovieDetails() {
                         <Button
                             secondary
                             leftIcon={<PlayCircleIcon className="w-5 h-5" />}
-                            className="px-7 py-3 text-sm transition active:scale-95">
+                            className="px-7 py-3 text-sm ">
                             Watch Trailer
                         </Button>
 
                         <Button
                             primary
                             href="#dateSelect"
-                            className={cx("btn-ticket", "px-10 py-3 text-sm transition active:scale-95")}>
+                            className={cx("btn-ticket", "px-10 py-3 text-sm ")}>
                             Buy Tickets
                         </Button>
 
                         <Button
                             rounded
                             onClick={() => setActive(!active)}
-                            className="h-11 w-11 px-2.5 transition active:scale-95">
+                            className="h-11 w-11 px-2.5 ">
                             <Heart className={`w-5 h-5 ${active && 'text-primary'}`} />
                         </Button>
                     </div>
@@ -109,7 +109,7 @@ function MovieDetails() {
             <div className="flex justify-center mt-20">
                 <Button
                     primary
-                    className="px-10 py-3 transition active:scale-95"
+                    className="px-10 py-3 "
                     onClick={() => navigate(routesConfig.moviesPage)}
                 >
                     Show more

@@ -31,7 +31,7 @@ function MovieCard({ movie }) {
             <div className="flex items-center justify-between mt-4 pb-3">
                 <Button
                     primary
-                    className="text-sm transition active:scale-95"
+                    className="text-sm"
                     onClick={() => navigate(routesConfig.movieDetailsPageGenerator(movie._id))}
                 >
                     Buy Tickets

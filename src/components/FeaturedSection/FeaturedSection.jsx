@@ -22,7 +22,7 @@ function FeaturedSection() {
                 <Button
                     onClick={() => navigate(routesConfig.moviesPage)}
                     rightIcon={<ArrowRight className="group-hover:translate-x-0.5 transition w-5 h-5" />}
-                    className="group gap-2 text-sm transition active:scale-95">
+                    className="group gap-2 text-sm">
                     View All
                 </Button>
 
@@ -37,7 +37,7 @@ function FeaturedSection() {
             <div className="flex justify-center mt-14 pb-20">
                 <Button
                     primary
-                    className="px-10 py-3 transition active:scale-95"
+                    className="px-10 py-3"
                     onClick={() => navigate(routesConfig.moviesPage)}
                 >
                     Show more

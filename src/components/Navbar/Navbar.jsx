@@ -97,7 +97,7 @@ function Navbar() {
                     !user ? (
                         <Button
                             primary
-                            className="h-10 w-20 transition active:scale-95"
+                            className="h-10 w-20"
                             onClick={handleLogin}>
                             Login
                         </Button>

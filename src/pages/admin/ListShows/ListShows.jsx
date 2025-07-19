@@ -37,6 +37,7 @@ function ListShows() {
     return !isLoading ? (
         <>
             <Title text1="List" text2="Shows" />
+            
             <div className="max-w-4xl mt-6 overflow-x-auto">
                 <table className="w-full border-collapse rounded-md overflow-hidden text-nowrap">
                     <thead>

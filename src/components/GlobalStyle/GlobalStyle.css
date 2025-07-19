@@ -58,3 +58,14 @@ html *::-webkit-scrollbar-track {
 .no-scrollbar {
     scrollbar-width: none;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* Loại bỏ nút tăng giảm */
+    -webkit-appearance: none;
+}
+
+/* đảo ngược màu sắc của icon calendar picker (nút chọn ngày) */
+::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}

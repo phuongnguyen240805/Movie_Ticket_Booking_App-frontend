@@ -61,7 +61,7 @@ function MyBookings() {
                             {item.isPaid && (
                                 <Button
                                     primary
-                                    className="px-4 py-1.5 mb-3 text-sm transition active:scale-95">
+                                    className="px-4 py-1.5 mb-3 text-sm ">
                                     Pay Now
                                 </Button>
                             )}

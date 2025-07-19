@@ -38,7 +38,7 @@ function HeroSection() {
                 primary
                 onClick={() => navigate(routesConfig.moviesPage)}
                 rightIcon={<ArrowRight className="group-hover:translate-x-0.5 transition w-5 h-5" />}
-                className="group gap-1 h-12 px-6 py-3 text-sm transition active:scale-95">
+                className="group gap-1 h-12 px-6 py-3 text-sm">
                 Explore Movies
             </Button>
 
