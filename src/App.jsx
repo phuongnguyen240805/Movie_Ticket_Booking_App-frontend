@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router";
 import { useLocation } from "react-router";
+import { Fragment } from "react";
 
 import { privateRoutes, publicRoutes } from "./routes";
 import { DefaultLayout, AdminLayout } from "./layouts";
@@ -37,7 +38,9 @@ function App() {
 
               if (route.layout) {
                 Layout = route.layout;
-              }
+              } else if (route.layout === null) {
+                Layout = Fragment;
+              };
 
               return <Route
                 key={index}

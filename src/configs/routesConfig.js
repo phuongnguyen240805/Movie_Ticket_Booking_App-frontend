@@ -6,6 +6,7 @@ const routes = {
     seatLayoutPage: '/movie/:id/:date',
     myBookingsPage: '/my-bookings',
     favoritePage: '/favorites',
+    notFoundPage: '*',
     movieDetailsPageGenerator: (id) => `/movie/${id}`,
     seatLayoutPageGenerator: (id, date) => `/movie/${id}/${date}`,
 
