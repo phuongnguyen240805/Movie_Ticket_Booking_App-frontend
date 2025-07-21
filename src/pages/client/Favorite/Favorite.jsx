@@ -1,6 +1,7 @@
 import { dummyShowsData } from "@/assets/assets";
 import BlurCircle from "@/components/BlurCircle";
 import MovieCard from "@/components/MovieCard";
+import Pagination from "@/components/Pagination";
 
 function Favorite() {
     return dummyShowsData.length > 0 ? (
@@ -9,13 +10,12 @@ function Favorite() {
             <BlurCircle top="100px" left="100px" />
             <BlurCircle bottom="100px" right="100px" />
 
-            <h1 className="text-lg font-medium my-4">Your Favorite Movies</h1>
-            <div className="flex flex-wrap max-sm:justify-center gap-8">
+            <Pagination title="Your Favorite Movies">
                 {dummyShowsData.map(movie => (
                     <MovieCard key={movie._id} movie={movie} />
                 ))}
-            </div>
-            
+            </Pagination>
+
         </div>
     ) : (
         <div className="flex flex-col justify-center items-center h-screen">

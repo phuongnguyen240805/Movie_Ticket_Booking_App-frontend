@@ -1,6 +1,7 @@
 import { dummyShowsData } from "@/assets/assets";
 import BlurCircle from "@/components/BlurCircle";
 import MovieCard from "@/components/MovieCard";
+import Pagination from "@/components/Pagination";
 
 function Movies() {
     return dummyShowsData.length > 0 ? (
@@ -9,13 +10,24 @@ function Movies() {
             <BlurCircle top="150px" left="0px" />
             <BlurCircle bottom="50px" right="50px" />
 
-            <h1 className="text-lg font-medium my-4">Now Showing</h1>
-            <div className="flex flex-wrap max-sm:justify-center gap-8">
+            <Pagination title='Action | Horror'>
                 {dummyShowsData.map(movie => (
                     <MovieCard key={movie._id} movie={movie} />
                 ))}
-            </div>
-            
+            </Pagination>
+
+            <Pagination title='Family | Comedy '>
+                {dummyShowsData.map(movie => (
+                    <MovieCard key={movie._id} movie={movie} />
+                ))}
+            </Pagination>
+
+            <Pagination title='Horror | Thriller'>
+                {dummyShowsData.map(movie => (
+                    <MovieCard key={movie._id} movie={movie} />
+                ))}
+            </Pagination>
+
         </div>
     ) : (
         <div className="flex flex-col justify-center items-center h-screen">

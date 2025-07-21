@@ -77,7 +77,7 @@ function MovieDetails() {
                         <Button
                             rounded
                             onClick={() => setActive(!active)}
-                            className="h-11 w-11 px-2.5 ">
+                            className="h-11 w-11 px-2.5">
                             <Heart className={`w-5 h-5 ${active && 'text-primary'}`} />
                         </Button>
                     </div>
