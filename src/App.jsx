@@ -1,5 +1,4 @@
-import { Route, Routes } from "react-router";
-import { useLocation } from "react-router";
+import { Route, Routes, useLocation } from "react-router";
 import { Fragment } from "react";
 
 import { privateRoutes, publicRoutes } from "./routes";

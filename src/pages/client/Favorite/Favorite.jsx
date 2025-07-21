@@ -7,9 +7,6 @@ function Favorite() {
     return dummyShowsData.length > 0 ? (
         <div className="relative my-40 mb-30 px-6 md:px-16 lg:px-40 xl:px-44 overflow-hidden min-h-[80vh]">
 
-            <BlurCircle top="100px" left="100px" />
-            <BlurCircle bottom="100px" right="100px" />
-
             <Pagination title="Your Favorite Movies">
                 {dummyShowsData.map(movie => (
                     <MovieCard key={movie._id} movie={movie} />

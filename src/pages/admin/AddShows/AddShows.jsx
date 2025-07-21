@@ -17,8 +17,6 @@ function AddShows() {
     const [dateTimeInput, setDateTimeInput] = useState("");
     const [showPrice, setShowPrice] = useState("");
 
-    console.log(dateTimeSelection)
-
     const fetchNowPlayingMovies = async () => {
         try {
             setNowPlayingMovies(dummyShowsData);

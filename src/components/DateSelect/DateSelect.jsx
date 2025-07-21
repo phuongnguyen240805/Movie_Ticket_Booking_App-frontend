@@ -10,8 +10,6 @@ import PropTypes from 'prop-types';
 
 const DateSelect = ({ dateTime, id }) => {
 
-    console.log(dateTime, id);
-
     const navigate = useNavigate();
     const [selected, setSelected] = useState(null);
 
