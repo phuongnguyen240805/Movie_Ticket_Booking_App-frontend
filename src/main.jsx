@@ -7,6 +7,7 @@ import App from './App';
 import { routesConfig } from './configs';
 import GlobalStyle from './components/GlobalStyle';
 import ScrollToTop from './components/ScrollToTop'; // tự cuộn top khi thay đổi đường dẫn
+import { AppProvider } from './context/AppContext';
 
 // Import your Publishable Key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
@@ -19,10 +20,12 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl={routesConfig.homePage}>
       <BrowserRouter>
-        <GlobalStyle>
-          <ScrollToTop />
-          <App />
-        </GlobalStyle>
+        <AppProvider>
+          <GlobalStyle>
+            <ScrollToTop />
+            <App />
+          </GlobalStyle>
+        </AppProvider>
       </BrowserRouter>
     </ClerkProvider>
   </StrictMode>,

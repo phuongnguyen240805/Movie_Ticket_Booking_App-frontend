@@ -1,9 +1,9 @@
-import logo from './logo.svg'
-import marvelLogo from './marvelLogo.svg'
-import googlePlay from './googlePlay.svg'
-import appStore from './appStore.svg'
-import screenImage from './screenImage.svg'
-import profile from './profile.png'
+import logo from './logo.svg';
+import marvelLogo from './marvelLogo.svg';
+import googlePlay from './googlePlay.svg';
+import appStore from './appStore.svg';
+import screenImage from './screenImage.svg';
+import profile from './profile.png';
 
 export const assets = {
     logo,
@@ -16,101 +16,81 @@ export const assets = {
 
 export const dummyHeroSectionData = [
     {
-        "_id": "299534",
-        "id": 299534,
-        "title": "Avengers: Endgame",
-        "overview": "After the devastating events of Avengers: Infinity War, the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe.",
-        "poster_path": "https://image.tmdb.org/t/p/original/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
-        "backdrop_path": "https://image.tmdb.org/t/p/original/7RyHsO4yDXtBv1zUU3mTpHeQ0d5.jpg",
-        "genres": [
-            { "id": 28, "name": "Action" },
-            { "id": 12, "name": "Adventure" },
-            { "id": 878, "name": "Science Fiction" }
+        id: 299534,
+        title: "Avengers: Endgame",
+        overview: "After the devastating events of Avengers: Infinity War, the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe.",
+        poster_path: "https://image.tmdb.org/t/p/original/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
+        backdrop_path: "https://image.tmdb.org/t/p/original/7RyHsO4yDXtBv1zUU3mTpHeQ0d5.jpg",
+        genres: [
+            { id: 28, name: "Action" },
+            { id: 12, name: "Adventure" },
+            { id: 878, name: "Science Fiction" }
         ],
-        "release_date": "2019-04-24",
-        "original_language": "en",
-        "tagline": "Part of the journey is the end.",
-        "vote_average": 8.3,
-        "vote_count": 22000,
-        "runtime": 181,
+        release_date: "2019-04-24",
+        tagline: "Part of the journey is the end.",
+        runtime: 181, // minutes
     },
     {
-        "_id": "299536",
-        "id": 299536,
-        "title": "Avengers: Infinity War",
-        "overview": "As the Avengers and their allies have continued to protect the world from threats too large for any one hero to handle, a new danger has emerged from the cosmic shadows: Thanos.",
-        "poster_path": "https://image.tmdb.org/t/p/original/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg",
-        "backdrop_path": "https://image.tmdb.org/t/p/original/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg",
-        "genres": [
-            { "id": 28, "name": "Action" },
-            { "id": 12, "name": "Adventure" },
-            { "id": 878, "name": "Science Fiction" }
+        id: 299536,
+        title: "Avengers: Infinity War",
+        overview: "As the Avengers and their allies have continued to protect the world from threats too large for any one hero to handle, a new danger has emerged from the cosmic shadows: Thanos.",
+        poster_path: "https://image.tmdb.org/t/p/original/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg",
+        backdrop_path: "https://image.tmdb.org/t/p/original/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg",
+        genres: [
+            { id: 28, name: "Action" },
+            { id: 12, name: "Adventure" },
+            { id: 878, name: "Science Fiction" }
         ],
-        "release_date": "2018-04-25",
-        "original_language": "en",
-        "tagline": "An entire universe. Once and for all.",
-        "vote_average": 8.3,
-        "vote_count": 21000,
-        "runtime": 149,
+        release_date: "2018-04-25",
+        tagline: "An entire universe. Once and for all.",
+        runtime: 149, // minutes
     },
     {
-        "_id": "284054",
-        "id": 284054,
-        "title": "Black Panther",
-        "overview": "King T'Challa returns home to the reclusive, technologically advanced African nation of Wakanda to serve as his country's new leader. However, T'Challa soon finds that he is challenged for the throne from factions within his own country.",
-        "poster_path": "https://image.tmdb.org/t/p/original/uxzzxijgPIY7slzFvMotPv8wjKA.jpg",
-        "backdrop_path": "https://image.tmdb.org/t/p/original/6ELJEzQJ3Y45HczvreC3dg0GV5R.jpg",
-        "genres": [
-            { "id": 28, "name": "Action" },
-            { "id": 12, "name": "Adventure" },
-            { "id": 878, "name": "Science Fiction" }
+        id: 284054,
+        title: "Black Panther",
+        overview: "King T'Challa returns home to the reclusive, technologically advanced African nation of Wakanda to serve as his country's new leader. However, T'Challa soon finds that he is challenged for the throne from factions within his own country.",
+        poster_path: "https://image.tmdb.org/t/p/original/uxzzxijgPIY7slzFvMotPv8wjKA.jpg",
+        backdrop_path: "https://image.tmdb.org/t/p/original/6ELJEzQJ3Y45HczvreC3dg0GV5R.jpg",
+        genres: [
+            { id: 28, name: "Action" },
+            { id: 12, name: "Adventure" },
+            { id: 878, name: "Science Fiction" }
         ],
-        "release_date": "2018-02-13",
-        "original_language": "en",
-        "tagline": "Long live the king.",
-        "vote_average": 7.4,
-        "vote_count": 18000,
-        "runtime": 134,
+        release_date: "2018-02-13",
+        tagline: "Long live the king.",
+        runtime: 134, // minutes
     },
     {
-        "_id": "271110",
-        "id": 271110,
-        "title": "Captain America: Civil War",
-        "overview": "Political involvement in the Avengers' affairs causes a rift between Captain America and Iron Man.",
-        "poster_path": "https://image.tmdb.org/t/p/original/rAGiXaUfPzY7CDEyNKUofk3Kw2e.jpg",
-        "backdrop_path": "https://image.tmdb.org/t/p/original/5Iw7zQTHVRBOYpA0V6z0yypOPZh.jpg",
-        "genres": [
-            { "id": 28, "name": "Action" },
-            { "id": 12, "name": "Adventure" },
-            { "id": 878, "name": "Science Fiction" }
+        id: 271110,
+        title: "Captain America: Civil War",
+        overview: "Political involvement in the Avengers' affairs causes a rift between Captain America and Iron Man.",
+        poster_path: "https://image.tmdb.org/t/p/original/rAGiXaUfPzY7CDEyNKUofk3Kw2e.jpg",
+        backdrop_path: "https://image.tmdb.org/t/p/original/5Iw7zQTHVRBOYpA0V6z0yypOPZh.jpg",
+        genres: [
+            { id: 28, name: "Action" },
+            { id: 12, name: "Adventure" },
+            { id: 878, name: "Science Fiction" }
         ],
-        "release_date": "2016-04-27",
-        "original_language": "en",
-        "tagline": "Divided We Fall.",
-        "vote_average": 7.4,
-        "vote_count": 17000,
-        "runtime": 147,
+        release_date: "2016-04-27",
+        tagline: "Divided We Fall.",
+        runtime: 147, // minutes
     },
     {
-        "_id": "118340",
-        "id": 118340,
-        "title": "Guardians of the Galaxy",
-        "overview": "A group of intergalactic criminals must pull together to stop a fanatical warrior with plans to purge the universe.",
-        "poster_path": "https://image.tmdb.org/t/p/original/y31QB9kn3XSudA15tV7UWQ9XLuW.jpg",
-        "backdrop_path": "https://image.tmdb.org/t/p/original/r7vmZjiyZw9rpJMQJdXpjgiCOk9.jpg",
-        "genres": [
-            { "id": 28, "name": "Action" },
-            { "id": 12, "name": "Adventure" },
-            { "id": 878, "name": "Science Fiction" }
+        id: 118340,
+        title: "Guardians of the Galaxy",
+        overview: "A group of intergalactic criminals must pull together to stop a fanatical warrior with plans to purge the universe.",
+        poster_path: "https://image.tmdb.org/t/p/original/y31QB9kn3XSudA15tV7UWQ9XLuW.jpg",
+        backdrop_path: "https://image.tmdb.org/t/p/original/r7vmZjiyZw9rpJMQJdXpjgiCOk9.jpg",
+        genres: [
+            { id: 28, name: "Action" },
+            { id: 12, name: "Adventure" },
+            { id: 878, name: "Science Fiction" }
         ],
-        "release_date": "2014-07-30",
-        "original_language": "en",
-        "tagline": "All heroes start somewhere.",
-        "vote_average": 7.9,
-        "vote_count": 16000,
-        "runtime": 121,
+        release_date: "2014-07-30",
+        tagline: "All heroes start somewhere.",
+        runtime: 121, // minutes
     }
-];
+]
 
 export const gallerysData = [
     { "name": "Marvel's Ironheart", "image_path": "https://static.nutscdn.com/vimg/300-0/e29c0fe492873043f31a5128dc98255d.webp", },
