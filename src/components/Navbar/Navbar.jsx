@@ -109,6 +109,11 @@ function Navbar() {
                                     labelIcon={<TicketPlus className={cx('user-item')} />}
                                     onClick={() => navigate(routesConfig.myBookingsPage)}
                                 />
+                                {/* <UserButton.Action
+                                    label="Admin"
+                                    labelIcon={<TicketPlus className={cx('user-item')} />}
+                                    onClick={() => navigate(routesConfig.admin)}
+                                /> */}
                             </UserButton.MenuItems>
                         </UserButton>
                     )

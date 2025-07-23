@@ -11,7 +11,9 @@ import styles from "./MovieDetails.module.scss";
 import classNames from "classnames/bind";
 import { Heart, PlayCircleIcon, StarIcon } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from "react-router";
+import TrailerModal from "@/components/TrailerModal";
 
 const cx = classNames.bind(styles);
 
@@ -21,6 +23,9 @@ function MovieDetails() {
     const { id } = useParams();
     const [show, setShow] = useState();
     const [active, setActive] = useState(false);
+
+    const [showTrailer, setShowTrailer] = useState(false);
+    const trailerUrl = 'https://www.youtube.com/watch?v=-sAOWhvheK8';
 
     // tìm film bằng id
     const getShowHandler = async () => {
@@ -39,6 +44,10 @@ function MovieDetails() {
 
     return show ? (
         <div className="px-6 md:px-16 lg:px-40 pt-30 md:pt-50">
+            <Helmet>
+                <title>Movie Ticket Booking - Movie Details</title>
+            </Helmet>
+
             <div className="flex flex-col md:flex-row gap-8 max-w-6xl mx-auto">
                 <img src={show.movie.poster_path} alt="" className="max-md:mx-auto rounded-xl h-104 max-w-70 object-cover" />
 
@@ -63,9 +72,15 @@ function MovieDetails() {
                         <Button
                             secondary
                             leftIcon={<PlayCircleIcon className="w-5 h-5" />}
-                            className="px-7 py-3 text-sm ">
+                            className="px-7 py-3 text-sm "
+                            onClick={() => setShowTrailer(true)}
+                        >
                             Watch Trailer
                         </Button>
+                        {showTrailer && (
+                            // show trailer
+                            <TrailerModal url={trailerUrl} onClose={() => setShowTrailer(false)} />
+                        )}
 
                         <Button
                             primary

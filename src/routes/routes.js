@@ -25,4 +25,4 @@ const privateRoutes = [
     { path: routesConfig.listShowsPage, component: ListShowsPage },
 ]
 
-export { publicRoutes, privateRoutes }
+export { publicRoutes, privateRoutes };

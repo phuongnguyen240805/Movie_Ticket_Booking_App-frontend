@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router';
 import { ClerkProvider } from '@clerk/clerk-react';
+import { HelmetProvider } from 'react-helmet-async';
 
 import App from './App';
 import { routesConfig } from './configs';
@@ -22,8 +23,10 @@ createRoot(document.getElementById('root')).render(
       <BrowserRouter>
         <AppProvider>
           <GlobalStyle>
-            <ScrollToTop />
-            <App />
+            <HelmetProvider>
+              <ScrollToTop />
+              <App />
+            </HelmetProvider>
           </GlobalStyle>
         </AppProvider>
       </BrowserRouter>

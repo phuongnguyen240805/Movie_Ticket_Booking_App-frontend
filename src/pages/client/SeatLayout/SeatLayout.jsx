@@ -8,6 +8,7 @@ import { isoTimeFormat } from "@/lib/isoTimeFormat";
 import { ArrowRightIcon, ClockIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from "react-router";
 
 function SeatLayout() {
@@ -71,6 +72,10 @@ function SeatLayout() {
 
     return show ? (
         <div className="flex flex-col md:flex-row px-6 md:px-16 lg:px-40 py-30 md:pt-50">
+            <Helmet>
+                <title>Movie Ticket Booking - Seats</title>
+            </Helmet>
+
             {/* Available Timings */}
             <div className="w-60 bg-primary/10 border border-primary/20 rounded-lg py-10 h-max md:sticky md:top-30">
                 <p className="text-lg font-semibold px-6">Available Timings</p>

@@ -1,9 +1,9 @@
-import logo from './logo.svg';
-import marvelLogo from './marvelLogo.svg';
-import googlePlay from './googlePlay.svg';
-import appStore from './appStore.svg';
-import screenImage from './screenImage.svg';
-import profile from './profile.png';
+import logo from './images/logo.svg';
+import marvelLogo from './images/marvelLogo.svg';
+import googlePlay from './images/googlePlay.svg';
+import appStore from './images/appStore.svg';
+import screenImage from './images/screenImage.svg';
+import profile from './images/profile.png';
 
 export const assets = {
     logo,
@@ -28,7 +28,7 @@ export const dummyHeroSectionData = [
         ],
         release_date: "2019-04-24",
         tagline: "Part of the journey is the end.",
-        runtime: 181, // minutes
+        runtime: 181, 
     },
     {
         id: 299536,
@@ -43,7 +43,7 @@ export const dummyHeroSectionData = [
         ],
         release_date: "2018-04-25",
         tagline: "An entire universe. Once and for all.",
-        runtime: 149, // minutes
+        runtime: 149, 
     },
     {
         id: 284054,
@@ -58,7 +58,7 @@ export const dummyHeroSectionData = [
         ],
         release_date: "2018-02-13",
         tagline: "Long live the king.",
-        runtime: 134, // minutes
+        runtime: 134, 
     },
     {
         id: 271110,
@@ -73,7 +73,7 @@ export const dummyHeroSectionData = [
         ],
         release_date: "2016-04-27",
         tagline: "Divided We Fall.",
-        runtime: 147, // minutes
+        runtime: 147, 
     },
     {
         id: 118340,
@@ -88,7 +88,7 @@ export const dummyHeroSectionData = [
         ],
         release_date: "2014-07-30",
         tagline: "All heroes start somewhere.",
-        runtime: 121, // minutes
+        runtime: 121, 
     }
 ]
 

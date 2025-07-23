@@ -4,6 +4,7 @@ import Loading from "@/components/Loading";
 import { routesConfig } from "@/configs";
 
 import { ArrowRightIcon } from "lucide-react";
+import { Helmet } from 'react-helmet-async';
 import { useEffect, useState } from "react";
 
 function NotFound() {
@@ -19,6 +20,10 @@ function NotFound() {
 
     return !isLoading ? (
         <div className="flex flex-col items-center justify-center h-screen text-sm max-md:px-4 py-20">
+            <Helmet>
+                <title>Movie Ticket Booking - NotFound</title>
+            </Helmet>
+
             <BlurCircle top="100px" left="100px" />
             <BlurCircle bottom="0" right="100px" />
 
@@ -38,7 +43,13 @@ function NotFound() {
                 Back to Home
             </Button>
         </div>
-    ) : <Loading />;
-}
+    ) : (<>
+        <Helmet>
+            <title>Movie Ticket Booking - NotFound</title>
+        </Helmet>
+
+        <Loading />
+    </>);
+};
 
 export default NotFound;

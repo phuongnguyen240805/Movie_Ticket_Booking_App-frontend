@@ -6,6 +6,7 @@ import { dateFormat } from "@/lib/dateFormat";
 import timeFormat from "@/lib/timeFormat";
 
 import { useEffect, useState } from "react";
+import { Helmet } from 'react-helmet-async';
 
 function MyBookings() {
 
@@ -25,6 +26,9 @@ function MyBookings() {
 
     return !isLoading ? (
         <div className="relative px-6 md:px-16 lg:px-40 pt-30 md:pt-40 min-h-[80vh]">
+            <Helmet>
+                <title>Movie Ticket Booking - Booking</title>
+            </Helmet>
 
             <BlurCircle top="100px" left="100px" />
             <BlurCircle bottom="0px" right="200px" />
@@ -82,7 +86,13 @@ function MyBookings() {
             ))}
 
         </div>
-    ) : <Loading />;
-}
+    ) : (<>
+        <Helmet>
+            <title>Movie Ticket Booking - Booking</title>
+        </Helmet>
+
+        <Loading />
+    </>);
+};
 
 export default MyBookings;
