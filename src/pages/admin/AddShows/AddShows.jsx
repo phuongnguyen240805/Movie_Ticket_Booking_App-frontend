@@ -1,29 +1,23 @@
-import { dummyShowsData } from "@/assets/assets";
 import Title from "@/components/admin/Title";
 import Button from "@/components/Button";
 import Loading from "@/components/Loading";
+import { useAppContext } from "@/context/AppContext";
 import { kConverter } from "@/lib/kConverter";
 
 import { CheckIcon, DeleteIcon, StarIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import toast from "react-hot-toast";
 
 function AddShows() {
 
-    const currency = import.meta.env.VITE_CURRENCY;
+    const { getToken, axios, nowPlayingMovies, image_base_url } = useAppContext();
 
-    const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
+    const currency = import.meta.env.VITE_CURRENCY;
     const [selectedMovie, setSelectedMovie] = useState(null);
     const [dateTimeSelection, setDateTimeSelection] = useState({});
     const [dateTimeInput, setDateTimeInput] = useState("");
     const [showPrice, setShowPrice] = useState("");
-
-    const fetchNowPlayingMovies = async () => {
-        try {
-            setNowPlayingMovies(dummyShowsData);
-        } catch (error) {
-            throw new Error(error.message);
-        }
-    };
+    const [addingShow, setAddingShow] = useState(false);
 
     // them thoi gian chieu film
     const handleDateTimeAdd = () => {
@@ -55,9 +49,36 @@ function AddShows() {
         });
     };
 
-    useEffect(() => {
-        fetchNowPlayingMovies();
-    }, []);
+    const handleSubmit = async () => {
+        try {
+            setAddingShow(true);
+
+            if (!selectedMovie || Object.keys(dateTimeSelection).length === 0 || !showPrice) return toast('Missing required fields');
+
+            const showsInput = Object.entries(dateTimeSelection).map(([date, time]) => ({ date, time }));
+            const payload = {
+                movieId: selectedMovie,
+                showsInput,
+                showPrice: Number(showPrice),
+            };
+
+            const { data } = await axios.post('/api/show/add', payload, {
+                headers: { Authorization: `Bearer ${await getToken()}` }
+            });
+
+            if (data.success) {
+                setSelectedMovie(null);
+                setDateTimeSelection({});
+                setShowPrice('');
+                return toast.success('Show Added successfully.');
+            } else {
+                return toast.error(data.message);
+            }
+        } catch (error) {
+            console.log('Submission error: ', error.message);
+            return toast.error('An error occurred. Please try again.');
+        }
+    };
 
     return nowPlayingMovies.length > 0 ? (
         <>
@@ -75,7 +96,7 @@ function AddShows() {
                         >
                             <div className="relative rounded-lg overflow-hidden">
                                 <img
-                                    src={movie.poster_path}
+                                    src={image_base_url + movie.poster_path}
                                     alt=""
                                     className="w-full object-cover brightness-90"
                                 />
@@ -97,7 +118,7 @@ function AddShows() {
                             )}
 
                             <p className="font-medium truncate">{movie.title}</p>
-                            <p className="text-gray-400 text-sm">{movie.genres.map(genre => genre.name).join(", ")}</p>
+                            <p className="text-gray-400 text-sm">{movie.release_date}</p>
                         </div>
                     ))}
                 </div>
@@ -172,7 +193,9 @@ function AddShows() {
             <Button
                 primary
                 rounded_sm
-                className="mt-6 "
+                className="mt-6"
+                onClick={handleSubmit}
+                disabled={addingShow}
             >
                 Add Show
             </Button>

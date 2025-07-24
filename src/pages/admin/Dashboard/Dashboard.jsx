@@ -1,41 +1,23 @@
-import { dummyDashboardData } from "@/assets/assets";
 import Title from "@/components/admin/Title";
 import BlurCircle from "@/components/BlurCircle";
 import Loading from "@/components/Loading";
+import Pagination from "@/components/Pagination";
+import { useAppContext } from "@/context/AppContext";
 import { dateFormat } from "@/lib/dateFormat";
 
 import { ChartLineIcon, CircleDollarSignIcon, PlayCircleIcon, StarIcon, UsersIcon } from "lucide-react";
-import { useEffect, useState } from "react";
-
-const overview = {
-    totalBookings: 0,
-    totalRevenue: 0,
-    activeShows: [],
-    totalUser: 0,
-}
 
 function Dashboard() {
 
+    const { isLoading, dashboardData, image_base_url } = useAppContext();
+
     const currency = import.meta.env.VITE_CURRENCY;
-
-    const [dashboardData, setDashboardData] = useState(overview);
-    const [isLoading, setIsLoading] = useState(true);
-
     const dashboardCards = [
         { title: "Total Bookings", value: dashboardData.totalBookings || "0", icon: ChartLineIcon },
         { title: "Total Revenue", value: dashboardData.totalRevenue + currency || "0", icon: CircleDollarSignIcon },
-        { title: "Active Shows", value: dashboardData.activeShows.length || "0", icon: PlayCircleIcon },
+        { title: "Active Shows", value: dashboardData.activeShows?.length || "0", icon: PlayCircleIcon },
         { title: "Total Users", value: dashboardData.totalUser || "0", icon: UsersIcon },
     ];
-
-    const fetchDashboardData = async () => {
-        setDashboardData(dummyDashboardData);
-        setIsLoading(false);
-    };
-
-    useEffect(() => {
-        fetchDashboardData();
-    }, []);
 
     return !isLoading ? (
         <>
@@ -57,12 +39,10 @@ function Dashboard() {
                 </div>
             </div>
 
-            <p className="mt-10 text-lg font-medium">Active Shows</p>
-            <div className="relative flex flex-wrap gap-6 mt-4 max-w-5xl">
-                <BlurCircle top="100px" left="-10%" />
+            <Pagination title="Active Shows" pageSize={10}>
                 {dashboardData.activeShows.map((show) => (
                     <div key={show._id} className="w-55 rounded-lg overflow-hidden h-full pb-3 bg-primary/10 border border-primary/20 hover:-translate-y-1 transition duration-300">
-                        <img src={show.movie.poster_path} alt="" className="h-60 w-full object-cover" />
+                        <img src={image_base_url + show.movie.poster_path} alt="" className="h-60 w-full object-cover" />
                         <p className="font-medium p-2 truncate">{show.movie.title}</p>
                         <div className="flex items-center justify-between px-2">
                             <p className="text-lg font-medium">{show.showPrice} {currency}</p>
@@ -74,8 +54,7 @@ function Dashboard() {
                         <p className="px-2 pt-2 text-sm text-gray-500">{dateFormat(show.showDateTime)}</p>
                     </div>
                 ))}
-            </div>
-
+            </Pagination>
         </>
     ) : <Loading />;
 }

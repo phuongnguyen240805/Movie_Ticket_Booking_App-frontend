@@ -1,29 +1,11 @@
-import { dummyBookingData } from "@/assets/assets";
 import Title from "@/components/admin/Title";
 import Loading from "@/components/Loading";
+import { useAppContext } from "@/context/AppContext";
 import { dateFormat } from "@/lib/dateFormat";
-
-import { useEffect, useState } from "react";
 
 function ListBookings() {
 
-    // const currency = import.meta.env.VITE_CURRENCY;
-
-    const [bookings, setBookings] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-
-    const getAllBookings = async () => {
-        try {
-            setBookings(dummyBookingData);
-            setIsLoading(false);
-        } catch (error) {
-            throw new Error(error.message);
-        }
-    };
-
-    useEffect(() => {
-        getAllBookings();
-    }, []);
+    const { listBookings, isLoading } = useAppContext();
 
     return !isLoading ? (
         <>
@@ -42,7 +24,7 @@ function ListBookings() {
                     </thead>
 
                     <tbody className="text-sm font-light">
-                        {bookings.map((item, index) => (
+                        {listBookings.map((item, index) => (
                             <tr
                                 key={index}
                                 className="border-b border-primary/20 bg-primary/5 even:bg-primary/10"

@@ -1,43 +1,18 @@
-import { dummyShowsData } from "@/assets/assets";
 import Title from "@/components/admin/Title";
 import Loading from "@/components/Loading";
+import { useAppContext } from "@/context/AppContext";
 import { dateFormat } from "@/lib/dateFormat";
-
-import { useEffect, useState } from "react";
 
 function ListShows() {
 
+    const { listShows, isLoading } = useAppContext();
+
     const currency = import.meta.env.VITE_CURRENCY;
-
-    const [show, setShow] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-
-    const getAllShows = async () => {
-        try {
-            setShow([{
-                movie: dummyShowsData[0],
-                showDateTime: "2025-06-30T02:30:00.000Z",
-                showPrice: 59,
-                occupiedSeats: {
-                    A1: "user_1",
-                    B1: "user_2",
-                    C1: "user_3"
-                }
-            }]);
-            setIsLoading(false);
-        } catch (error) {
-            throw new Error(error.message);
-        }
-    };
-
-    useEffect(() => {
-        getAllShows();
-    }, []);
 
     return !isLoading ? (
         <>
             <Title text1="List" text2="Shows" />
-            
+
             <div className="max-w-4xl mt-6 overflow-x-auto">
                 <table className="w-full border-collapse rounded-md overflow-hidden text-nowrap">
                     <thead>
@@ -50,7 +25,7 @@ function ListShows() {
                     </thead>
 
                     <tbody className="text-sm font-light">
-                        {show.map((show, index) => (
+                        {listShows.map((show, index) => (
                             <tr
                                 key={index}
                                 className="border-b border-primary/10 bg-primary/5 even:bg-primary/10"
