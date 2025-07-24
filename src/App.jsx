@@ -4,6 +4,7 @@ import { Fragment } from "react";
 import { privateRoutes, publicRoutes } from "./routes";
 import { DefaultLayout, AdminLayout } from "./layouts";
 import { routesConfig } from "./configs";
+import ProtectedAdminRoute from "./components/admin/ProtectedAdminRoute";
 
 function App() {
 
@@ -27,7 +28,13 @@ function App() {
               return <Route
                 key={index}
                 path={route.path}
-                element={<Layout><Page /></Layout>} />
+                element={
+                  <ProtectedAdminRoute>
+                    <Layout>
+                      <Page />
+                    </Layout>
+                  </ProtectedAdminRoute>
+                } />
             })
           ) : (
             publicRoutes.map((route, index) => { // client routes
