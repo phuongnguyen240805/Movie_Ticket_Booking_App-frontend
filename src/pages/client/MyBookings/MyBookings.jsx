@@ -1,6 +1,7 @@
 import BlurCircle from "@/components/BlurCircle";
 import Button from "@/components/Button";
 import Loading from "@/components/Loading";
+import Pagination from "@/components/Pagination";
 import { useAppContext } from "@/context/AppContext";
 import { dateFormat } from "@/lib/dateFormat";
 import timeFormat from "@/lib/timeFormat";
@@ -20,60 +21,62 @@ function MyBookings() {
                 <title>Movie Ticket Booking - Booking</title>
             </Helmet>
 
-            <BlurCircle top="100px" left="100px" />
-            <BlurCircle bottom="0px" right="200px" />
+            <BlurCircle top="100px" right="100px" />
 
-            <h1 className="text-lg font-semibold mb-4">My Bookings</h1>
+            <Pagination title='My Bookings' pageSize={4}>
+                {bookings.map((item, index) => (
+                    // booking item
+                    <div
+                        key={index}
+                        className="flex flex-col md:flex-row justify-between bg-primary/8 
+                        border border-primary/20 rounded-lg mt-2 p-2 max-w-3xl w-full min-h-36 md:min-h-36"
+                        style={{ minHeight: "9rem" }} // fallback for min-h-36 if not available
+                    >
 
-            {bookings.map((item, index) => (
-                // booking item
-                <div
-                    key={index}
-                    className="flex flex-col md:flex-row justify-between bg-primary/8 
-                    border border-primary/20 rounded-lg mt-4 p-2 max-w-3xl"
-                >
+                        <div className="flex flex-col md:flex-row flex-1 min-h-28">
+                            <img
+                                src={image_base_url + item.show.movie.poster_path}
+                                alt=""
+                                className="md:max-w-40 aspect-video h-auto object-cover object-bottom rounded min-h-24"
+                                style={{ minHeight: "6rem" }} // fallback for min-h-24 if not available
+                            />
 
-                    <div className="flex flex-col md:flex-row">
-                        <img
-                            src={image_base_url + item.show.movie.poster_path}
-                            alt=""
-                            className="md:max-w-45 aspect-video h-auto object-cover object-bottom rounded"
-                        />
-
-                        <div className="flex flex-col p-4">
-                            <p className="text-lg font-semibold">{item.show.movie.title}</p>
-                            <p className="text-gray-400 text-sm">{timeFormat(item.show.movie.runtime)}</p>
-                            <p className="text-gray-400 text-sm mt-auto">{dateFormat(item.show.showDateTime)}</p>
+                            <div className="flex flex-col p-3 flex-1">
+                                <p className="text-lg font-semibold">{item.show.movie.title}</p>
+                                <p className="text-gray-400 text-sm">{timeFormat(item.show.movie.runtime)}</p>
+                                <p className="text-gray-400 text-sm mt-auto">{dateFormat(item.show.showDateTime)}</p>
+                            </div>
                         </div>
+
+                        <div className="flex flex-col md:items-end md:text-right justify-between p-3 min-w-[200px] 
+                             md:min-w-[260px] flex-shrink-0">
+                            <div className="flex items-center gap-3">
+                                <p className="text-2xl font-semibold mb-2">
+                                    {item.show.showPrice * item.bookedSeats.length}{currency}
+                                </p>
+                                {!item.isPaid && (
+                                    <Button
+                                        primary
+                                        className="px-3 py-1 mb-2 text-sm ">
+                                        Pay Now
+                                    </Button>
+                                )}
+                            </div>
+                            <div className="text-sm">
+                                <p>
+                                    <span className="text-gray-400">Total Tickets: </span>
+                                    {item.bookedSeats.length}
+                                </p>
+                                <p>
+                                    <span className="text-gray-400">Seat Number: </span>
+                                    {item.bookedSeats.join(", ")}
+                                </p>
+                            </div>
+                        </div>
+
                     </div>
-
-                    <div className="flex flex-col md:items-end md:text-right justify-between p-4">
-                        <div className="flex items-center gap-4">
-                            <p className="text-2xl font-semibold mb-3">
-                                {item.show.showPrice * item.bookedSeats.length}{currency}
-                            </p>
-                            {item.isPaid && (
-                                <Button
-                                    primary
-                                    className="px-4 py-1.5 mb-3 text-sm ">
-                                    Pay Now
-                                </Button>
-                            )}
-                        </div>
-                        <div className="text-sm">
-                            <p>
-                                <span className="text-gray-400">Total Tickets: </span>
-                                {item.bookedSeats.length}
-                            </p>
-                            <p>
-                                <span className="text-gray-400">Seat Number: </span>
-                                {item.bookedSeats.join(", ")}
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-            ))}
+                ))}
+            </Pagination>
 
         </div>
     ) : (<>

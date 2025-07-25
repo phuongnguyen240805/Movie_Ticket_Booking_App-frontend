@@ -4,6 +4,7 @@ import { useAppContext } from "@/context/AppContext";
 import { dateFormat } from "@/lib/dateFormat";
 
 function ListBookings() {
+    const currency = import.meta.env.VITE_CURRENCY
 
     const { listBookings, isLoading } = useAppContext();
 
@@ -35,7 +36,7 @@ function ListBookings() {
                                 <td className="p-2">
                                     {Object.keys(item.bookedSeats).map(seat => item.bookedSeats[seat]).join(", ")}
                                 </td>
-                                <td className="p-2">{item.amount}</td>
+                                <td className="p-2">{item.amount + currency}</td>
                             </tr>
                         ))}
                     </tbody>

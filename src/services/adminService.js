@@ -29,9 +29,8 @@ export const fetchDashboardData = async ({ getToken, setDashboardData, setIsLoad
         if (data.success) {
             setDashboardData(data.dashboardData);
             setIsLoading(false);
-        } else {
-            return toast.error(data.message);
         }
+        
     } catch (error) {
         console.log('Error fetching dashboard data: ', error.message);
     }

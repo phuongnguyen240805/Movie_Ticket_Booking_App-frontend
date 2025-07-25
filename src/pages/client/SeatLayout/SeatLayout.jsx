@@ -16,15 +16,16 @@ function SeatLayout() {
 
     const groupRows = [['A', 'B'], ['C', 'D'], ['E', 'F'], ['G', 'H'], ['I', 'J']];
 
-    const {
-        user, axios, getToken
-    } = useAppContext();
+    const { user, axios, getToken } = useAppContext();
 
     const { id, date } = useParams();
     const [show, setShow] = useState(null);
     const [selectedSeats, setSelectedSeats] = useState([]);
     const [selectedTime, setSelectedTime] = useState([]);
     const [occupiedSeats, setOccupiedSeats] = useState([]);
+
+    console.log(selectedTime)
+    console.log(occupiedSeats)
 
     const navigate = useNavigate();
 
@@ -42,7 +43,8 @@ function SeatLayout() {
     // lấy ra ghế đã đặt
     const getOccupiedSeats = async ({ selectedTime, setOccupiedSeats }) => {
         try {
-            const { data } = await axios.get(`/api/bookings/seats/${selectedTime.showId}`);
+            const { data } = await axios.get(`/api/booking/seats/${selectedTime.showId}`);
+            console.log(data.occupiedSeats)
 
             if (data.success) setOccupiedSeats(data.occupiedSeats);
         } catch (error) {
@@ -55,7 +57,7 @@ function SeatLayout() {
             if (!user) return toast.error('Please login to proceed');
             if (selectedTime.length === 0 || !selectedSeats.length) return toast.error('Please select a time and seats');
 
-            const { data } = await axios.post('/api/bookings/create', { showId: selectedTime.showId, selectedSeats }, {
+            const { data } = await axios.post('/api/booking/create', { showId: selectedTime.showId, selectedSeats }, {
                 headers: { Authorization: `Bearer ${await getToken()}` }
             });
 
@@ -114,7 +116,7 @@ function SeatLayout() {
     }, [id]);
 
     useEffect(() => {
-        if (!selectedTime.length) return;
+        if (!selectedTime || !selectedTime.showId) return;
 
         getOccupiedSeats({ selectedTime, setOccupiedSeats });
     }, [selectedTime]);

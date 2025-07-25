@@ -23,7 +23,7 @@ function MovieDetails() {
 
     const {
         user, shows, axios, image_base_url,
-        trailer_base_url, getToken, favoriteMovies, 
+        trailer_base_url, getToken, favoriteMovies,
         setFavoriteMovies
     } = useAppContext();
 
@@ -32,7 +32,9 @@ function MovieDetails() {
     const [show, setShow] = useState(null);
     const [trailerKey, setTrailerKey] = useState();
     const [showTrailer, setShowTrailer] = useState(false);
+    const [intro, setIntro] = useState([]);
 
+    // [GET]: /api/show/:showId
     const getShow = async ({ id, setShow }) => {
         try {
             const { data } = await axios.get(`/api/show/${id}`);
@@ -43,6 +45,7 @@ function MovieDetails() {
         }
     };
 
+    // [POST]: /api/user/update-favorite
     const handleFavorite = async () => {
         try {
             if (!user) return toast.error('Please login to proceed');
@@ -60,6 +63,7 @@ function MovieDetails() {
         }
     };
 
+    // trailer
     useEffect(() => {
         if (!show || !Array.isArray(show.trailer)) {
             setTrailerKey(undefined);
@@ -77,6 +81,13 @@ function MovieDetails() {
 
         getShow({ id, setShow });
     }, [id]);
+
+    // get ramdom film intro
+    useEffect(() => {
+        const randomShows = shows.slice().sort(() => Math.random() - 0.5).slice(0, 4);
+
+        setIntro(randomShows);
+    }, [navigate, shows]);
 
     return show ? (
         <div className="px-6 md:px-16 lg:px-40 pt-30 md:pt-50">
@@ -152,7 +163,7 @@ function MovieDetails() {
 
             <p className="text-lg font-medium mt-20 mb-8">You May Also Like</p>
             <div className="flex justify-center flex-wrap max-sm:justify-center gap-8">
-                {shows.slice().sort(() => Math.random() - 0.5).slice(0, 4).map((movie, index) => (
+                {intro.map((movie, index) => (
                     <MovieCard key={index} movie={movie} />
                 ))}
             </div>
