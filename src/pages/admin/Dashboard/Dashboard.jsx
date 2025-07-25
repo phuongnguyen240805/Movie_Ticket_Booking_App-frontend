@@ -40,7 +40,7 @@ function Dashboard() {
             </div>
 
             <Pagination title="Active Shows" pageSize={10}>
-                {dashboardData.activeShows.map((show) => (
+                {dashboardData.activeShows?.map((show) => (
                     <div key={show._id} className="w-55 rounded-lg overflow-hidden h-full pb-3 bg-primary/10 border border-primary/20 hover:-translate-y-1 transition duration-300">
                         <img src={image_base_url + show.movie.poster_path} alt="" className="h-60 w-full object-cover" />
                         <p className="font-medium p-2 truncate">{show.movie.title}</p>

@@ -1,28 +1,18 @@
-import { dummyBookingData } from "@/assets/assets";
 import BlurCircle from "@/components/BlurCircle";
 import Button from "@/components/Button";
 import Loading from "@/components/Loading";
+import { useAppContext } from "@/context/AppContext";
 import { dateFormat } from "@/lib/dateFormat";
 import timeFormat from "@/lib/timeFormat";
 
-import { useEffect, useState } from "react";
 import { Helmet } from 'react-helmet-async';
 
 function MyBookings() {
 
     const currency = import.meta.env.VITE_CURRENCY;
 
-    const [bookings, setBookings] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const { image_base_url, bookings, isLoading } = useAppContext();
 
-    const getMyBookings = () => {
-        setBookings(dummyBookingData);
-        setIsLoading(false);
-    };
-
-    useEffect(() => {
-        getMyBookings();
-    }, []);
 
     return !isLoading ? (
         <div className="relative px-6 md:px-16 lg:px-40 pt-30 md:pt-40 min-h-[80vh]">
@@ -45,7 +35,7 @@ function MyBookings() {
 
                     <div className="flex flex-col md:flex-row">
                         <img
-                            src={item.show.movie.poster_path}
+                            src={image_base_url + item.show.movie.poster_path}
                             alt=""
                             className="md:max-w-45 aspect-video h-auto object-cover object-bottom rounded"
                         />

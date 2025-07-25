@@ -70,6 +70,7 @@ function AddShows() {
                 setSelectedMovie(null);
                 setDateTimeSelection({});
                 setShowPrice('');
+                setAddingShow(false);
                 return toast.success('Show Added successfully.');
             } else {
                 return toast.error(data.message);
@@ -78,6 +79,7 @@ function AddShows() {
             console.log('Submission error: ', error.message);
             return toast.error('An error occurred. Please try again.');
         }
+
     };
 
     return nowPlayingMovies.length > 0 ? (

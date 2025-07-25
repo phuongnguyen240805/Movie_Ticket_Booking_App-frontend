@@ -1,11 +1,13 @@
 import { useEffect, useRef } from 'react';
 import ReactPlayer from 'react-player';
+import { XIcon } from 'lucide-react';
+
+import Button from '../Button';
 
 function TrailerModal({ url, onClose }) {
 
     const modalRef = useRef(null);
 
-    // Close modal on ESC key
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.key === 'Escape') {
@@ -18,7 +20,6 @@ function TrailerModal({ url, onClose }) {
         return () => document.removeEventListener('keydown', handleKeyDown);
     }, [onClose]);
 
-    // Focus trap for accessibility
     useEffect(() => {
         if (modalRef.current) {
             modalRef.current.focus();
@@ -32,18 +33,25 @@ function TrailerModal({ url, onClose }) {
             onClick={onClose}
             tabIndex={-1}
             ref={modalRef}
-            aria-modal="true"
-            role="dialog"
         >
             <div
                 onClick={(e) => e.stopPropagation()}
                 className="animate-fadeIn relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 
-                rounded-2xl shadow-2xl p-6 md:p-8 scale-95 md:scale-100 transition-transform duration-300 
-                min-w-[400px] max-w-[98vw] w-[900px] max-h-[95vh] flex flex-col items-center justify-center"
+                rounded-2xl shadow-2xl pt-3 pb-6 px-6 md:pt-4 md:pb-8 md:px-8 scale-95 md:scale-100 transition-transform 
+                duration-300 min-w-[400px] max-w-[98vw] w-[900px] max-h-[95vh] flex flex-col items-center justify-center"
             >
+                
+                <div className="flex items-center justify-between w-full mb-2">
+                    <p className="text-xl md:text-2xl font-medium">Trailer</p>
+                    <Button
+                        onClick={onClose}
+                        className="hover:scale-110 p-2"
+                    >
+                        <XIcon className="w-6 h-6" />
+                    </Button>
+                </div>
 
-                <p className="text-xl md:text-2xl font-medium pl-4 mb-2 w-full">Trailer</p>
-                <div className="w-full max-w-[800px] aspect-video bg-black flex items-center justify-center 
+                <div className="w-full max-w-[900px] aspect-video bg-black flex items-center justify-center 
                 rounded-xl overflow-hidden shadow-lg mx-auto">
                     <ReactPlayer
                         src={url}

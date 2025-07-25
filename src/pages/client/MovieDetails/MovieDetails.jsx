@@ -1,4 +1,3 @@
-import { dummyDateTimeData, dummyShowsData } from "@/assets/assets";
 import BlurCircle from "@/components/BlurCircle";
 import Button from "@/components/Button";
 import DateSelect from "@/components/DateSelect";
@@ -7,39 +6,76 @@ import MovieCard from "@/components/MovieCard";
 import { routesConfig } from "@/configs";
 import timeFormat from "@/lib/timeFormat";
 import styles from "./MovieDetails.module.scss";
+import TrailerModal from "@/components/TrailerModal";
+import { useAppContext } from "@/context/AppContext";
+import { fetchFavoriteMovies } from "@/services/userService";
 
 import classNames from "classnames/bind";
 import { Heart, PlayCircleIcon, StarIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from "react-router";
-import TrailerModal from "@/components/TrailerModal";
+import toast from "react-hot-toast";
 
 const cx = classNames.bind(styles);
 
 function MovieDetails() {
 
+    const {
+        user, shows, axios, image_base_url,
+        trailer_base_url, getToken, favoriteMovies, 
+        setFavoriteMovies
+    } = useAppContext();
+
     const navigate = useNavigate();
     const { id } = useParams();
-    const [show, setShow] = useState();
-    const [active, setActive] = useState(false);
-
+    const [show, setShow] = useState(null);
+    const [trailerKey, setTrailerKey] = useState();
     const [showTrailer, setShowTrailer] = useState(false);
-    const trailerUrl = 'https://www.youtube.com/watch?v=-sAOWhvheK8';
 
-    // tìm film bằng id
-    const getShowHandler = async () => {
-        const show = dummyShowsData.find(show => show._id === id);
+    const getShow = async ({ id, setShow }) => {
+        try {
+            const { data } = await axios.get(`/api/show/${id}`);
 
-        show &&
-            setShow({
-                movie: show,
-                dateTime: dummyDateTimeData
+            if (data.success) setShow(data);
+        } catch (error) {
+            console.error(error.message);
+        }
+    };
+
+    const handleFavorite = async () => {
+        try {
+            if (!user) return toast.error('Please login to proceed');
+
+            const { data } = await axios.post('/api/user/update-favorite', { movieId: id }, {
+                headers: { Authorization: `Bearer ${await getToken()}` }
             });
+
+            if (data.success) {
+                await fetchFavoriteMovies({ getToken, setFavoriteMovies });
+                toast.success(data.message);
+            }
+        } catch (error) {
+            console.error(error.message);
+        }
     };
 
     useEffect(() => {
-        getShowHandler();
+        if (!show || !Array.isArray(show.trailer)) {
+            setTrailerKey(undefined);
+            return;
+        }
+        const trailer = show.trailer.find(
+            (video) => video.site === "YouTube" && video.type === "Trailer"
+        );
+
+        setTrailerKey(trailer ? trailer.key : undefined);
+    }, [show]);
+
+    useEffect(() => {
+        if (!id) return;
+
+        getShow({ id, setShow });
     }, [id]);
 
     return show ? (
@@ -49,7 +85,7 @@ function MovieDetails() {
             </Helmet>
 
             <div className="flex flex-col md:flex-row gap-8 max-w-6xl mx-auto">
-                <img src={show.movie.poster_path} alt="" className="max-md:mx-auto rounded-xl h-104 max-w-70 object-cover" />
+                <img src={image_base_url + show.movie?.poster_path} alt="" className="max-md:mx-auto rounded-xl h-104 max-w-70 object-cover" />
 
                 <div className="relative flex flex-col gap-3">
                     <BlurCircle top="-100px" left="-100px" />
@@ -79,7 +115,7 @@ function MovieDetails() {
                         </Button>
                         {showTrailer && (
                             // show trailer
-                            <TrailerModal url={trailerUrl} onClose={() => setShowTrailer(false)} />
+                            <TrailerModal url={trailer_base_url + trailerKey} onClose={() => setShowTrailer(false)} />
                         )}
 
                         <Button
@@ -91,9 +127,9 @@ function MovieDetails() {
 
                         <Button
                             rounded
-                            onClick={() => setActive(!active)}
+                            onClick={handleFavorite}
                             className="h-11 w-11 px-2.5">
-                            <Heart className={`w-5 h-5 ${active && 'text-primary'}`} />
+                            <Heart className={`w-5 h-5 ${favoriteMovies.find(movie => movie._id === id) ? 'text-primary fill-primary' : ''}`} />
                         </Button>
                     </div>
 
@@ -105,7 +141,7 @@ function MovieDetails() {
                 <div className='flex items-center gap-4 w-max px-4'>
                     {show.movie.casts.slice(0, 12).map((cast, index) => (
                         <div key={index} className='flex flex-col items-center text-center'>
-                            <img src={cast.profile_path} alt="" className='rounded-full h-20 md:h-20 aspect-square object-cover' />
+                            <img src={image_base_url + cast.profile_path} alt="" className='rounded-full h-20 md:h-20 aspect-square object-cover' />
                             <p className="font-medium text-xs mt-3">{cast.name}</p>
                         </div>
                     ))}
@@ -116,7 +152,7 @@ function MovieDetails() {
 
             <p className="text-lg font-medium mt-20 mb-8">You May Also Like</p>
             <div className="flex justify-center flex-wrap max-sm:justify-center gap-8">
-                {dummyShowsData.slice(0, 4).map((movie, index) => (
+                {shows.slice().sort(() => Math.random() - 0.5).slice(0, 4).map((movie, index) => (
                     <MovieCard key={index} movie={movie} />
                 ))}
             </div>

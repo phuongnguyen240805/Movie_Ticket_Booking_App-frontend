@@ -1,30 +1,33 @@
-import { dummyShowsData } from "@/assets/assets";
 import MovieCard from "@/components/MovieCard";
 import Pagination from "@/components/Pagination";
+import { useAppContext } from "@/context/AppContext";
 
 import { Helmet } from 'react-helmet-async';
 
 function Movies() {
-    return dummyShowsData.length > 0 ? (
+
+    const { shows } = useAppContext();
+
+    return shows.length > 0 ? (
         <div className="relative my-40 mb-30 px-6 md:px-16 lg:px-40 xl:px-44 overflow-hidden min-h-[80vh]">
             <Helmet>
                 <title>Movie Ticket Booking - Movies</title>
             </Helmet>
 
             <Pagination title='Action | Horror'>
-                {dummyShowsData.map(movie => (
+                {shows.map(movie => (
                     <MovieCard key={movie._id} movie={movie} />
                 ))}
             </Pagination>
 
             <Pagination title='Family | Comedy '>
-                {dummyShowsData.map(movie => (
+                {shows.map(movie => (
                     <MovieCard key={movie._id} movie={movie} />
                 ))}
             </Pagination>
 
             <Pagination title='Horror | Thriller'>
-                {dummyShowsData.map(movie => (
+                {shows.map(movie => (
                     <MovieCard key={movie._id} movie={movie} />
                 ))}
             </Pagination>

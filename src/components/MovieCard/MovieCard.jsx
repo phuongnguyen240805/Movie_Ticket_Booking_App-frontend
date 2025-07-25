@@ -6,18 +6,20 @@ import styles from './MovieCard.module.scss';
 import { routesConfig } from "@/configs";
 import Button from "../Button";
 import timeFormat from "@/lib/timeFormat";
+import { useAppContext } from "@/context/AppContext";
 
 const cx = classNames.bind(styles);
 
 function MovieCard({ movie }) {
 
     const navigate = useNavigate();
+    const { image_base_url } = useAppContext();
 
     return (
         <div className={cx('wrapper', 'w-66')}>
             <img
                 className={cx('img')}
-                src={movie.backdrop_path}
+                src={image_base_url + movie.backdrop_path}
                 alt=""
                 onClick={() => navigate(routesConfig.movieDetailsPageGenerator(movie._id))}
             />

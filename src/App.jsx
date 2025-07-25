@@ -42,10 +42,10 @@ function App() {
               let Layout = DefaultLayout;
               const Page = route.component;
 
-              if (route.layout) {
-                Layout = route.layout;
-              } else if (route.layout === null) {
+              if (route.layout === null) {
                 Layout = Fragment;
+              } else if (route.layout) {
+                Layout = route.layout;
               };
 
               return <Route
