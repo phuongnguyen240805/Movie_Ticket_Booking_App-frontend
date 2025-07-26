@@ -16,8 +16,8 @@ const cx = classNames.bind(styles);
 const menuItems = [
     { label: "Home", to: routesConfig.homePage },
     { label: "Movies", to: routesConfig.moviesPage },
-    { label: "Theaters", to: routesConfig.homePage },
-    { label: "Releases", to: routesConfig.homePage },
+    { label: "Releases", to: routesConfig.releasesPage },
+    { label: "MovieHub", to: routesConfig.blogPage },
     { label: "Favorites", to: routesConfig.favoritePage },
 ];
 

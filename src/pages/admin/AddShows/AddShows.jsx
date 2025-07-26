@@ -88,22 +88,26 @@ function AddShows() {
 
             {/* display list playing movies */}
             <p className="mt-10 text-lg font-medium">Now Playing Movies</p>
-            <div className="overflow-x-auto pb-4">
-                <div className="group flex flex-wrap gap-4 mt-4 w-max">
-                    {nowPlayingMovies.map((movie) => (
+            <div className="w-full pb-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 mt-4">
+
+                    {nowPlayingMovies.slice(0, 20).map((movie) => (
                         <div
                             key={movie.id}
-                            className="relative max-w-40 cursor-pointer group-hover:not-hover:opacity-40 hover:-translate-y-1 transition duration-300"
+                            className={`relative cursor-pointer hover:-translate-y-1 transition duration-300 
+                                border border-transparent rounded-lg bg-gray-900/60 shadow
+                                ${selectedMovie === movie.id ? "ring-2 ring-primary" : ""}`}
                             onClick={() => setSelectedMovie(movie.id)}
                         >
-                            <div className="relative rounded-lg overflow-hidden">
+
+                            <div className="relative rounded-lg overflow-hidden aspect-[2/3]">
                                 <img
                                     src={image_base_url + movie.poster_path}
-                                    alt=""
-                                    className="w-full object-cover brightness-90"
+                                    alt={movie.title}
+                                    className="w-full h-full object-cover brightness-90"
                                 />
 
-                                <div className="text-sm flex items-center justify-between p-2 bg-black/70 w-full absolute bottom-0 left-0">
+                                <div className="text-xs flex items-center justify-between p-2 bg-black/70 w-full absolute bottom-0 left-0">
                                     <p className="flex items-center gap-1 text-gray-400">
                                         <StarIcon className="w-4 h-4 text-primary fill-primary" />
                                         {movie.vote_average.toFixed(1)}
@@ -114,15 +118,19 @@ function AddShows() {
 
                             {/* check selected movie */}
                             {selectedMovie === movie.id && (
-                                <div className="absolute top-2 right-2 flex items-center justify-center bg-primary h-6 w-6 rounded">
+                                <div className="absolute top-2 right-2 flex items-center justify-center bg-primary h-6 w-6 rounded shadow-lg">
                                     <CheckIcon className="w-4 h-4 text-white" strokeWidth={2.5} />
                                 </div>
                             )}
 
-                            <p className="font-medium truncate">{movie.title}</p>
-                            <p className="text-gray-400 text-sm">{movie.release_date}</p>
+                            <div className="px-2 py-1">
+                                <p className="font-medium truncate text-sm">{movie.title}</p>
+                                <p className="text-gray-400 text-xs">{movie.release_date}</p>
+                            </div>
                         </div>
+
                     ))}
+
                 </div>
             </div>
 

@@ -1,7 +1,7 @@
 import {
     HomePage, MovieDetailsPage, MoviesPage,
     MyBookingsPage, FavoritePage, SeatLayoutPage,
-    NotFoundPage
+    NotFoundPage, ReleasesPage, BlogPage
 } from "@/pages/client";
 import { DashboardPage, AddShowsPage, ListBookingsPage, ListShowsPage } from "@/pages/admin";
 import { routesConfig } from "@/configs";
@@ -14,6 +14,8 @@ const publicRoutes = [
     { path: routesConfig.myBookingsPage, component: MyBookingsPage },
     { path: routesConfig.favoritePage, component: FavoritePage },
     { path: routesConfig.seatLayoutPage, component: SeatLayoutPage },
+    { path: routesConfig.releasesPage, component: ReleasesPage },
+    { path: routesConfig.blogPage, component: BlogPage },
     { path: routesConfig.notFoundPage, component: NotFoundPage, layout: null },
 ]
 
