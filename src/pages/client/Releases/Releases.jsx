@@ -3,7 +3,6 @@ import { useAppContext } from "@/context/AppContext";
 import MovieCard from "@/components/MovieCard";
 import Button from "@/components/Button";
 import { PlayCircleIcon, BellIcon, Heart } from "lucide-react";
-import { Helmet } from "react-helmet-async";
 import classNames from "classnames";
 import useTitle from "@/hooks";
 
