@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { Helmet } from "react-helmet-async";
 import { SearchIcon, ChevronLeft, ChevronRight } from "lucide-react";
 import classNames from "classnames";
+
+import useTitle from "@/hooks";
 
 // Dummy data for demonstration
 const BLOG_TYPES = [
@@ -49,6 +50,8 @@ const POPULAR_TAGS = TAGS.slice(0, 6);
 const PAGE_SIZE = 6;
 
 function Blog() {
+
+    useTitle('Movie Ticket Booking - Blog');
     // State
     const [search, setSearch] = useState("");
     const [type, setType] = useState("");
@@ -107,9 +110,7 @@ function Blog() {
 
     return (
         <div className="bg-[#0e1014] min-h-screen pt-24 pb-10 px-2 md:px-8">
-            <Helmet>
-                <title>Movie Ticket Booking - Blog</title>
-            </Helmet>
+            
             <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
                 {/* Main Content */}
                 <div className="flex-1 min-w-0">

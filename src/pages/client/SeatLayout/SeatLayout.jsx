@@ -5,17 +5,18 @@ import Loading from "@/components/Loading";
 import { routesConfig } from "@/configs";
 import { isoTimeFormat } from "@/lib/isoTimeFormat";
 import { useAppContext } from "@/context/AppContext";
+import useTitle from "@/hooks";
 
 import { ArrowRightIcon, ClockIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from "react-router";
 
 function SeatLayout() {
 
     const groupRows = [['A', 'B'], ['C', 'D'], ['E', 'F'], ['G', 'H'], ['I', 'J']];
 
+    useTitle('Movie Ticket Booking - Seats');
     const { user, axios, getToken } = useAppContext();
 
     const { id, date } = useParams();
@@ -23,9 +24,6 @@ function SeatLayout() {
     const [selectedSeats, setSelectedSeats] = useState([]);
     const [selectedTime, setSelectedTime] = useState([]);
     const [occupiedSeats, setOccupiedSeats] = useState([]);
-
-    console.log(selectedTime)
-    console.log(occupiedSeats)
 
     const navigate = useNavigate();
 
@@ -44,7 +42,6 @@ function SeatLayout() {
     const getOccupiedSeats = async ({ selectedTime, setOccupiedSeats }) => {
         try {
             const { data } = await axios.get(`/api/booking/seats/${selectedTime.showId}`);
-            console.log(data.occupiedSeats)
 
             if (data.success) setOccupiedSeats(data.occupiedSeats);
         } catch (error) {
@@ -123,9 +120,6 @@ function SeatLayout() {
 
     return show ? (
         <div className="flex flex-col md:flex-row px-6 md:px-16 lg:px-40 py-30 md:pt-50">
-            <Helmet>
-                <title>Movie Ticket Booking - Seats</title>
-            </Helmet>
 
             {/* Available Timings */}
             <div className="w-60 bg-primary/10 border border-primary/20 rounded-lg py-10 h-max md:sticky md:top-30">

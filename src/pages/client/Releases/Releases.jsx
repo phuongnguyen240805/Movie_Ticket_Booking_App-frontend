@@ -5,6 +5,7 @@ import Button from "@/components/Button";
 import { PlayCircleIcon, BellIcon, Heart } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import classNames from "classnames";
+import useTitle from "@/hooks";
 
 // Helper functions to replace dayjs
 function formatDate(dateStr, format) {
@@ -65,6 +66,9 @@ const GENRES = [
 ];
 
 function Release() {
+
+    useTitle('Movie Ticket Booking - Releases');
+
     const { nowPlayingMovies, image_base_url, favoriteMovies, setFavoriteMovies } = useAppContext();
     const [selectedMonth, setSelectedMonth] = useState(() => {
         const now = new Date();
@@ -170,10 +174,7 @@ function Release() {
 
     return (
         <div className="relative min-h-[80vh] px-6 md:px-16 lg:px-40 xl:px-44 py-20">
-            <Helmet>
-                <title>Movie Ticket Booking - Releases</title>
-            </Helmet>
-
+           
             <h1 className="text-3xl font-bold mb-2">Upcoming & New Releases</h1>
             <p className="text-gray-400 mb-8">Stay updated with the latest and upcoming movies. Set reminders, watch trailers, and add to your favorites!</p>
 

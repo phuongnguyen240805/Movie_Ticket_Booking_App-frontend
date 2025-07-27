@@ -3,23 +3,19 @@ import Button from "@/components/Button";
 import Loading from "@/components/Loading";
 import Pagination from "@/components/Pagination";
 import { useAppContext } from "@/context/AppContext";
+import useTitle from "@/hooks";
 import { dateFormat } from "@/lib/dateFormat";
 import timeFormat from "@/lib/timeFormat";
 
-import { Helmet } from 'react-helmet-async';
-
 function MyBookings() {
 
+    useTitle('Movie Ticket Booking - Booking');
     const currency = import.meta.env.VITE_CURRENCY;
 
     const { image_base_url, bookings, isLoading } = useAppContext();
 
-
     return !isLoading ? (
         <div className="relative px-6 md:px-16 lg:px-40 pt-30 md:pt-40 min-h-[80vh]">
-            <Helmet>
-                <title>Movie Ticket Booking - Booking</title>
-            </Helmet>
 
             <BlurCircle top="100px" right="100px" />
 
@@ -56,8 +52,10 @@ function MyBookings() {
                                 </p>
                                 {!item.isPaid && (
                                     <Button
+                                        to={item.paymentLink}
                                         primary
-                                        className="px-3 py-1 mb-2 text-sm ">
+                                        className="px-3 py-1 mb-2 text-sm "
+                                    >
                                         Pay Now
                                     </Button>
                                 )}
@@ -79,13 +77,7 @@ function MyBookings() {
             </Pagination>
 
         </div>
-    ) : (<>
-        <Helmet>
-            <title>Movie Ticket Booking - Booking</title>
-        </Helmet>
-
-        <Loading />
-    </>);
+    ) : <Loading />;
 };
 
 export default MyBookings;

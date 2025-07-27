@@ -13,13 +13,15 @@ import { fetchFavoriteMovies } from "@/services/userService";
 import classNames from "classnames/bind";
 import { Heart, PlayCircleIcon, StarIcon } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from "react-router";
 import toast from "react-hot-toast";
+import useTitle from "@/hooks";
 
 const cx = classNames.bind(styles);
 
 function MovieDetails() {
+
+    useTitle('Movie Ticket Booking - Movie Details');
 
     const {
         user, shows, axios, image_base_url,
@@ -91,9 +93,6 @@ function MovieDetails() {
 
     return show ? (
         <div className="px-6 md:px-16 lg:px-40 pt-30 md:pt-50">
-            <Helmet>
-                <title>Movie Ticket Booking - Movie Details</title>
-            </Helmet>
 
             <div className="flex flex-col md:flex-row gap-8 max-w-6xl mx-auto">
                 <img src={image_base_url + show.movie?.poster_path} alt="" className="max-md:mx-auto rounded-xl h-104 max-w-70 object-cover" />

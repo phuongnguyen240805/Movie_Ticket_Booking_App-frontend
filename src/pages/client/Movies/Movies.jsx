@@ -1,10 +1,11 @@
 import MovieCard from "@/components/MovieCard";
 import Pagination from "@/components/Pagination";
 import { useAppContext } from "@/context/AppContext";
-
-import { Helmet } from 'react-helmet-async';
+import useTitle from "@/hooks";
 
 function Movies() {
+
+    useTitle('Movie Ticket Booking - Movies');
 
     const { shows } = useAppContext();
 
@@ -21,10 +22,12 @@ function Movies() {
 
     return shows.length > 0 ? (
         <div className="relative my-40 mb-30 px-6 md:px-16 lg:px-40 xl:px-44 overflow-hidden min-h-[80vh]">
-            <Helmet>
-                <title>Movie Ticket Booking - Movies</title>
-            </Helmet>
 
+            <Pagination title='All'>
+                {shows.map(movie => (
+                    <MovieCard key={movie._id} movie={movie} />
+                ))}
+            </Pagination>
 
             <Pagination title='Horror | Thriller | Action'>
                 {movieClassification(['Horror', 'Thriller', 'Action']).map(movie => (
@@ -47,10 +50,6 @@ function Movies() {
         </div>
     ) : (
         <div className="flex flex-col justify-center items-center h-screen">
-            <Helmet>
-                <title>Movie Ticket Booking - Movies</title>
-            </Helmet>
-
             <h1 className="text-3xl font-bold text-center">No movies available</h1>
         </div>
     );

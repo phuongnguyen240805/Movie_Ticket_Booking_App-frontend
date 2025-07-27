@@ -2,13 +2,14 @@ import BlurCircle from "@/components/BlurCircle";
 import Button from "@/components/Button";
 import Loading from "@/components/Loading";
 import { routesConfig } from "@/configs";
+import useTitle from "@/hooks";
 
 import { ArrowRightIcon } from "lucide-react";
-import { Helmet } from 'react-helmet-async';
 import { useEffect, useState } from "react";
 
 function NotFound() {
 
+    useTitle('Movie Ticket Booking - NotFound');
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -20,9 +21,6 @@ function NotFound() {
 
     return !isLoading ? (
         <div className="flex flex-col items-center justify-center h-screen text-sm max-md:px-4 py-20">
-            <Helmet>
-                <title>Movie Ticket Booking - NotFound</title>
-            </Helmet>
 
             <BlurCircle top="100px" left="100px" />
             <BlurCircle bottom="0" right="100px" />
@@ -43,13 +41,7 @@ function NotFound() {
                 Back to Home
             </Button>
         </div>
-    ) : (<>
-        <Helmet>
-            <title>Movie Ticket Booking - NotFound</title>
-        </Helmet>
-
-        <Loading />
-    </>);
+    ) : <Loading />;
 };
 
 export default NotFound;

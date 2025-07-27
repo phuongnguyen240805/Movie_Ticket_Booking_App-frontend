@@ -32,6 +32,8 @@ function AppProvider({ children }) {
     const [favoriteMovies, setFavoriteMovies] = useState([]);
     const [bookings, setBookings] = useState([]);
 
+    // ===================== URL pay ================================
+
     const [isLoading, setIsLoading] = useState(true);
     const { user } = useUser();
     const { getToken } = useAuth();
@@ -66,7 +68,7 @@ function AppProvider({ children }) {
         favoriteMovies, bookings,
         // generate
         axios, user, isLoading, image_base_url, trailer_base_url, getToken, navigate,
-        setFavoriteMovies,
+        setFavoriteMovies, 
     };
 
     return (
