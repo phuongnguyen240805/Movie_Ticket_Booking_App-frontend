@@ -3,6 +3,7 @@ import Button from "@/components/Button";
 import Loading from "@/components/Loading";
 import { useAppContext } from "@/context/AppContext";
 import { kConverter } from "@/lib/kConverter";
+import { addShow } from "@/services/showService";
 
 import { CheckIcon, DeleteIcon, StarIcon } from "lucide-react";
 import { useState } from "react";
@@ -10,7 +11,7 @@ import toast from "react-hot-toast";
 
 function AddShows() {
 
-    const { getToken, axios, nowPlayingMovies, image_base_url } = useAppContext();
+    const { getToken, nowPlayingMovies, image_base_url } = useAppContext();
 
     const currency = import.meta.env.VITE_CURRENCY;
     const [selectedMovie, setSelectedMovie] = useState(null);
@@ -62,9 +63,8 @@ function AddShows() {
                 showPrice: Number(showPrice),
             };
 
-            const { data } = await axios.post('/api/show/add', payload, {
-                headers: { Authorization: `Bearer ${await getToken()}` }
-            });
+            // [PORT]: /api/show/add
+            const data = await addShow(payload, getToken);
 
             if (data.success) {
                 setSelectedMovie(null);

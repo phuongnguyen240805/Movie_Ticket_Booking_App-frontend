@@ -8,14 +8,15 @@ import timeFormat from "@/lib/timeFormat";
 import styles from "./MovieDetails.module.scss";
 import TrailerModal from "@/components/TrailerModal";
 import { useAppContext } from "@/context/AppContext";
-import { fetchFavoriteMovies } from "@/services/userService";
+import { fetchFavoriteMovies, updateFavorite } from "@/services/userService";
+import { fetchShow } from "@/services/showService";
+import useTitle from "@/hooks";
 
 import classNames from "classnames/bind";
 import { Heart, PlayCircleIcon, StarIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import toast from "react-hot-toast";
-import useTitle from "@/hooks";
 
 const cx = classNames.bind(styles);
 
@@ -24,9 +25,8 @@ function MovieDetails() {
     useTitle('Movie Ticket Booking - Movie Details');
 
     const {
-        user, shows, axios, image_base_url,
-        trailer_base_url, getToken, favoriteMovies,
-        setFavoriteMovies
+        user, shows, image_base_url, trailer_base_url,
+        getToken, favoriteMovies, setFavoriteMovies,
     } = useAppContext();
 
     const navigate = useNavigate();
@@ -36,10 +36,10 @@ function MovieDetails() {
     const [showTrailer, setShowTrailer] = useState(false);
     const [intro, setIntro] = useState([]);
 
-    // [GET]: /api/show/:showId
-    const getShow = async ({ id, setShow }) => {
+    const getShow = async () => {
         try {
-            const { data } = await axios.get(`/api/show/${id}`);
+            // [GET]: /api/show/:showId
+            const data = await fetchShow(id);
 
             if (data.success) setShow(data);
         } catch (error) {
@@ -47,14 +47,12 @@ function MovieDetails() {
         }
     };
 
-    // [POST]: /api/user/update-favorite
     const handleFavorite = async () => {
         try {
             if (!user) return toast.error('Please login to proceed');
 
-            const { data } = await axios.post('/api/user/update-favorite', { movieId: id }, {
-                headers: { Authorization: `Bearer ${await getToken()}` }
-            });
+            // [POST]: /api/user/update-favorite
+            const data = await updateFavorite(id, getToken);
 
             if (data.success) {
                 await fetchFavoriteMovies({ getToken, setFavoriteMovies });

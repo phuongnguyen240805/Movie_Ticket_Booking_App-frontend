@@ -6,6 +6,8 @@ import { routesConfig } from "@/configs";
 import { isoTimeFormat } from "@/lib/isoTimeFormat";
 import { useAppContext } from "@/context/AppContext";
 import useTitle from "@/hooks";
+import { fetchShow } from "@/services/showService";
+import { createBooking, fetchOccupiedSeats } from "@/services/bookingService";
 
 import { ArrowRightIcon, ClockIcon } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -17,7 +19,7 @@ function SeatLayout() {
     const groupRows = [['A', 'B'], ['C', 'D'], ['E', 'F'], ['G', 'H'], ['I', 'J']];
 
     useTitle('Movie Ticket Booking - Seats');
-    const { user, axios, getToken } = useAppContext();
+    const { user, getToken } = useAppContext();
 
     const { id, date } = useParams();
     const [show, setShow] = useState(null);
@@ -27,10 +29,10 @@ function SeatLayout() {
 
     const navigate = useNavigate();
 
-    // xử lý tìm film theo id
-    const getShow = async ({ id, setShow }) => {
+    const getShow = async () => {
         try {
-            const { data } = await axios.get(`/api/show/${id}`);
+            // [GET]: /api/show/:showId
+            const data = await fetchShow(id);
 
             if (data.success) setShow(data);
         } catch (error) {
@@ -39,9 +41,10 @@ function SeatLayout() {
     };
 
     // lấy ra ghế đã đặt
-    const getOccupiedSeats = async ({ selectedTime, setOccupiedSeats }) => {
+    const getOccupiedSeats = async () => {
         try {
-            const { data } = await axios.get(`/api/booking/seats/${selectedTime.showId}`);
+            // [POST]: /api/booking/seats/:showId
+            const data = await fetchOccupiedSeats(selectedTime);
 
             if (data.success) setOccupiedSeats(data.occupiedSeats);
         } catch (error) {
@@ -54,9 +57,8 @@ function SeatLayout() {
             if (!user) return toast.error('Please login to proceed');
             if (selectedTime.length === 0 || !selectedSeats.length) return toast.error('Please select a time and seats');
 
-            const { data } = await axios.post('/api/booking/create', { showId: selectedTime.showId, selectedSeats }, {
-                headers: { Authorization: `Bearer ${await getToken()}` }
-            });
+            // [POST]: /api/booking/create
+            const data = await createBooking(selectedTime, selectedSeats, getToken);
 
             if (data.success) {
                 toast.success(data.message);

@@ -29,13 +29,25 @@ export const fetchNowPlayingMovies = async ({ getToken, setNowPlayingMovies }) =
 };
 
 // [GET]: /api/show/:movieId
-export const getShow = async ({ id, setShow }) => {
+export const fetchShow = async (id) => {
     try {
         const { data } = await axios.get(`/api/show/${id}`);
 
-        if (data.success) setShow(data);
+        return data;
     } catch (error) {
         console.error(error.message);
     }
 };
 
+// [PORT]: /api/show/add
+export const addShow = async (payload, getToken) => {
+    try {
+        const { data } = await axios.post('/api/show/add', payload, {
+            headers: { Authorization: `Bearer ${await getToken()}` }
+        });
+
+        return data;
+    } catch (error) {
+        console.error(error.message);
+    }
+};

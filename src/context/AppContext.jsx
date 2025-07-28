@@ -26,7 +26,6 @@ function AppProvider({ children }) {
     // ======================= SHOW API (/api/show) ==============================
     const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
     const [shows, setShows] = useState([]);
-    // const [show, setShow] = useState(null);
 
     // ======================= USER API (/api/user) ==============================
     const [favoriteMovies, setFavoriteMovies] = useState([]);

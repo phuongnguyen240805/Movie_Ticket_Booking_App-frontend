@@ -26,3 +26,16 @@ export const getMyBookings = async ({ getToken, setBookings }) => {
         console.error(error.message);
     }
 };
+
+// [POST]: /api/user/update-favorite
+export const updateFavorite = async (id, getToken) => {
+    try {
+        const { data } = await axios.post('/api/user/update-favorite', { movieId: id }, {
+            headers: { Authorization: `Bearer ${await getToken()}` }
+        });
+
+        return data;
+    } catch (error) {
+        console.error(error.message);
+    }
+};
