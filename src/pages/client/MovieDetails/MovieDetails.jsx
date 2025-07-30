@@ -81,6 +81,7 @@ function MovieDetails() {
         if (!id) return;
 
         getShow({ id, setShow });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
     // get ramdom film intro
@@ -94,7 +95,7 @@ function MovieDetails() {
         <div className="px-6 md:px-16 lg:px-40 pt-30 md:pt-50">
 
             <div className="flex flex-col md:flex-row gap-8 max-w-6xl mx-auto">
-                <Image src={image_base_url + show.movie?.poster_path} alt=""
+                <Image src={image_base_url + show.movie?.poster_path} alt="" key={show.movie._id}
                     className="max-md:mx-auto rounded-xl h-104 max-w-70 object-cover" />
 
                 <div className="relative flex flex-col gap-3">
