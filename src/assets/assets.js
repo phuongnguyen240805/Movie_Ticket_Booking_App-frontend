@@ -4,6 +4,7 @@ import googlePlay from './images/googlePlay.svg';
 import appStore from './images/appStore.svg';
 import screenImage from './images/screenImage.svg';
 import profile from './images/profile.png';
+import noImage from './images/noImagePlaceholder.jpeg';
 
 export const assets = {
     logo,
@@ -11,7 +12,8 @@ export const assets = {
     googlePlay,
     appStore,
     screenImage,
-    profile
+    profile,
+    noImage
 }
 
 export const dummyHeroSectionData = [

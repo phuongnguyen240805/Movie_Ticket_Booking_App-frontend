@@ -10,6 +10,7 @@ import { assets } from "@/assets/assets";
 import Button from "@/components/Button";
 import { useAppContext } from "@/context/AppContext";
 import ScrollToTopButton from "../ScrollToTopButton";
+import Search from "../Search";
 
 const cx = classNames.bind(styles);
 
@@ -26,6 +27,8 @@ function Navbar() {
     const { isAdmin } = useAppContext();
     const [isOpen, setIsOpen] = useState(false);
     const [btnOnTop, setBtnOnTop] = useState(false);
+    const [btnShowSearch, setBtnShowSearch] = useState(false);
+
     const { user } = useUser();
     const { openSignIn } = useClerk();
     const navigate = useNavigate();
@@ -90,8 +93,15 @@ function Navbar() {
             </div>
 
             <div className="flex items-center gap-8">
-                <SearchIcon className='max-md:hidden w-6 h-6 cursor-pointer' />
+                {/* Search */}
+                <SearchIcon
+                    onClick={() => setBtnShowSearch(!btnShowSearch)}
+                    className='w-6 h-6 cursor-pointer'
+                />
+                {btnShowSearch && <Search setBtnShowSearch={setBtnShowSearch} />}
+
                 {
+                    // login
                     !user ? (
                         <Button
                             primary

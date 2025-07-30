@@ -11,6 +11,7 @@ import { useAppContext } from "@/context/AppContext";
 import { fetchFavoriteMovies, updateFavorite } from "@/services/userService";
 import { fetchShow } from "@/services/showService";
 import useTitle from "@/hooks";
+import Image from "@/components/Image";
 
 import classNames from "classnames/bind";
 import { Heart, PlayCircleIcon, StarIcon } from "lucide-react";
@@ -93,7 +94,8 @@ function MovieDetails() {
         <div className="px-6 md:px-16 lg:px-40 pt-30 md:pt-50">
 
             <div className="flex flex-col md:flex-row gap-8 max-w-6xl mx-auto">
-                <img src={image_base_url + show.movie?.poster_path} alt="" className="max-md:mx-auto rounded-xl h-104 max-w-70 object-cover" />
+                <Image src={image_base_url + show.movie?.poster_path} alt=""
+                    className="max-md:mx-auto rounded-xl h-104 max-w-70 object-cover" />
 
                 <div className="relative flex flex-col gap-3">
                     <BlurCircle top="-100px" left="-100px" />
@@ -149,7 +151,8 @@ function MovieDetails() {
                 <div className='flex items-center gap-4 w-max px-4'>
                     {show.movie.casts.slice(0, 12).map((cast, index) => (
                         <div key={index} className='flex flex-col items-center text-center'>
-                            <img src={image_base_url + cast.profile_path} alt="" className='rounded-full h-20 md:h-20 aspect-square object-cover' />
+                            <Image src={image_base_url + cast.profile_path} alt=""
+                                className='rounded-full h-20 md:h-20 aspect-square object-cover' />
                             <p className="font-medium text-xs mt-3">{cast.name}</p>
                         </div>
                     ))}

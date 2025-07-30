@@ -81,7 +81,7 @@ function AddShows() {
         }
 
     };
-
+    
     return nowPlayingMovies.length > 0 ? (
         <>
             <Title text1="Add" text2="Shows" />

@@ -17,6 +17,14 @@
     --text-color: #d1d5dc;
     --menu-bg-mobile: rgba(0, 0, 0, 0.7);
     --menu-bg-desktop: rgba(255, 255, 255, 0.1);
+
+    /* search variables*/
+    --search-border-radius: 92px;
+    --search-height: 46px;
+    --search-button-width: 52px;
+    --search-color: rgba(248, 108, 66, 0.84);
+
+    --font-family: "Outfit", sans-serif;
 }
 
 * {
