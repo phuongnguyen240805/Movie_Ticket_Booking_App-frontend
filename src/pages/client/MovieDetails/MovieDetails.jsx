@@ -152,7 +152,7 @@ function MovieDetails() {
                 <div className='flex items-center gap-4 w-max px-4'>
                     {show.movie.casts.slice(0, 12).map((cast, index) => (
                         <div key={index} className='flex flex-col items-center text-center'>
-                            <Image src={image_base_url + cast.profile_path} alt=""
+                            <Image src={image_base_url + cast.profile_path} alt="" key={cast._id}
                                 className='rounded-full h-20 md:h-20 aspect-square object-cover' />
                             <p className="font-medium text-xs mt-3">{cast.name}</p>
                         </div>

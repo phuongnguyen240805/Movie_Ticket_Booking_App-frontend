@@ -22,13 +22,13 @@
     --search-border-radius: 92px;
     --search-height: 46px;
     --search-button-width: 52px;
-    --search-color: rgba(248, 108, 66, 0.84);
+    --search-color: #F84565;
 
     --font-family: "Outfit", sans-serif;
 }
 
 * {
-    font-family: "Outfit", sans-serif;
+    font-family: var(--font-family);
     box-sizing: border-box;
     scrollbar-width: thin;
     scrollbar-color: #787777 #1e1e1e;

@@ -6,6 +6,7 @@
 .search {
     position: relative;
     display: flex;
+    min-width: 340px;
     height: var(--search-height);
     padding-left: 16px;
     border-radius: var(--search-border-radius);
@@ -79,6 +80,8 @@
 }
 
 .search-btn {
+    position: absolute;
+    right: 0;
     width: var(--search-button-width);
     height: 100%;
     cursor: pointer;
