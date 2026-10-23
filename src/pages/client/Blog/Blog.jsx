@@ -5,6 +5,7 @@ import useTitle from '@/hooks';
 import { filterMovies, genreNames } from '@/lib/movieCatalog';
 import CatalogMovieCard from '@/components/CatalogMovieCard';
 import CatalogStatus from '@/components/CatalogStatus';
+import MovieHubDetails from '@/components/MovieHubDetails';
 import { routesConfig } from '@/configs';
 
 const PAGE_SIZE = 6;
@@ -16,6 +17,7 @@ export default function Blog() {
     const [genre, setGenre] = useState('');
     const [sort, setSort] = useState('newest');
     const [page, setPage] = useState(1);
+    const [expandedId, setExpandedId] = useState(null);
     const movies = filterMovies(shows, { search, genre, sort });
     const genres = [...new Set(shows.flatMap(genreNames))].sort();
     const totalPages = Math.ceil(movies.length / PAGE_SIZE);
@@ -24,7 +26,7 @@ export default function Blog() {
 
     return <div className="min-h-screen pt-28 pb-12 px-6 md:px-16 max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold mb-2">MovieHub</h1>
-        <p className="text-gray-400 mb-8">Explore movies in our cinema, watch trailers, and find your next favorite.</p>
+        <p className="text-gray-400 mb-8">Your movie notebook: stories, cast, audience ratings and screening times. Open a movie to explore.</p>
         <div className="flex flex-col md:flex-row gap-8">
             <div className="flex-1 min-w-0">
                 <div className="flex flex-wrap gap-4 bg-gray-900/80 p-4 rounded-xl mb-6">
@@ -40,8 +42,11 @@ export default function Blog() {
                 {!showsLoading && !showsError && <>
                     <p className="text-sm text-gray-400 mb-4">{movies.length} movies</p>
                     {movies.length === 0 && <p className="py-10 text-center text-gray-400">No movies found.</p>}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {movies.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE).map(movie => <CatalogMovieCard key={movie._id} movie={movie} />)}
+                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 items-start">
+                        {movies.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE).map(movie => <div key={movie._id} className={expandedId === movie._id ? 'xl:col-span-2' : ''}>
+                            <CatalogMovieCard movie={movie} expanded={expandedId === movie._id} onExplore={() => setExpandedId(current => current === movie._id ? null : movie._id)} />
+                            {expandedId === movie._id && <MovieHubDetails movie={movie} />}
+                        </div>)}
                     </div>
                     {totalPages > 1 && <nav aria-label="MovieHub pages" className="flex justify-center items-center gap-4 mt-8">
                         <button disabled={currentPage === 1} onClick={() => setPage(currentPage - 1)} className="disabled:opacity-40">Previous</button><span>{currentPage} / {totalPages}</span>
@@ -52,7 +57,7 @@ export default function Blog() {
             <aside className="md:w-64 space-y-6">
                 {!showsLoading && !showsError && <div className="bg-gray-900/80 rounded-xl p-4">
                     <h2 className="font-semibold mb-4">Highest rated</h2>
-                    {featured.map(movie => <Link key={movie._id} to={routesConfig.movieDetailsPageGenerator(movie._id)} className="block py-2 hover:text-primary">{movie.title} · {Number(movie.vote_average || 0).toFixed(1)}</Link>)}
+                    {featured.map(movie => <button key={movie._id} onClick={() => { setSearch(movie.title); setGenre(''); setPage(1); setExpandedId(movie._id); }} className="block text-left py-2 hover:text-primary">{movie.title} · {Number(movie.vote_average || 0).toFixed(1)}</button>)}
                 </div>}
                 <Link to={routesConfig.releasesPage} className="block text-primary">Browse the release calendar →</Link>
             </aside>

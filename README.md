@@ -17,6 +17,8 @@ Run `npm ci`, then `npm run dev`. Browser requests use relative `/api` URLs. Vit
 
 MovieHub searches titles/overviews, filters genres, sorts and paginates real movies. Releases filters the same catalogue by release month and genre and highlights matching dates on its calendar. These dates are film release dates, not screening dates.
 
+Both pages use compact movie cards. MovieHub opens an inline notebook under the selected card with the synopsis, cast/characters, audience score and screenings loaded on demand. Each screening date links directly to the existing seat-selection route. Times are displayed in Vietnam time; booking links preserve the backend date key. Releases uses short landscape thumbnails and brief metadata.
+
 The backend has no article feed, separate upcoming catalogue or reminder endpoint. Sample articles, broken article links and simulated reminders have been removed. Releases lists films with scheduled screenings; it does not claim to be a complete upcoming-movie feed. No backend changes are required.
 
 ## Checks

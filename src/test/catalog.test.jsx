@@ -18,6 +18,8 @@ const older = { ...movie, _id: '102', title: 'Older Comedy', overview: 'A funny 
 const mount = element => render(<MemoryRouter>{element}</MemoryRouter>);
 afterEach(cleanup);
 beforeEach(() => {
+    mocks.fetchShow.mockReset();
+    mocks.updateFavorite.mockReset();
     mocks.context = { shows: [movie, older], showsLoading: false, showsError: '', reloadShows: vi.fn(), favoriteMovies: [], setFavoriteMovies: vi.fn(), user: null, getToken: vi.fn().mockResolvedValue('token'), axios: { get: vi.fn() }, image_base_url: 'https://image.tmdb.org/t/p/original' };
 });
 
@@ -25,7 +27,7 @@ describe('MovieHub and Releases', () => {
     it('renders backend movies with working detail links and no sample articles', () => {
         mount(<Blog />);
         expect(screen.getByRole('heading', { name: 'MovieHub' })).toBeTruthy();
-        expect(screen.getByRole('link', { name: 'View First Movie' }).getAttribute('href')).toBe('/movie/101');
+        expect(screen.getByRole('button', { name: 'View First Movie' }).getAttribute('aria-expanded')).toBe('false');
         expect(screen.queryByText(/Bài viết mẫu/)).toBeNull();
     });
     it('searches titles and overviews and filters by backend genres', () => {
@@ -43,7 +45,7 @@ describe('MovieHub and Releases', () => {
         expect(screen.getAllByRole('article')).toHaveLength(2);
         fireEvent.change(screen.getByRole('textbox'), { target: { value: 'Film 7' } });
         expect(screen.getAllByRole('article')).toHaveLength(1);
-        expect(screen.getByRole('link', { name: 'View Film 7' })).toBeTruthy();
+        expect(screen.getByRole('button', { name: 'View Film 7' })).toBeTruthy();
     });
     it('shows loading and retry states rather than an empty catalogue', () => {
         mocks.context.showsLoading = true;
@@ -82,6 +84,39 @@ describe('MovieHub and Releases', () => {
 });
 
 describe('backend movie actions', () => {
+    it('opens an inline movie notebook with cast, rating, screenings and a direct booking link', async () => {
+        mocks.fetchShow.mockResolvedValue({ success: true, movie: { ...movie, runtime: 110, casts: [{ id: 1, name: 'Actor One', character: 'The hero' }] }, dateTime: { '2026-10-25': [{ showId: 'show-1', time: '2026-10-25T03:30:00Z' }] } });
+        mount(<Blog />);
+        expect(mocks.fetchShow).not.toHaveBeenCalled();
+        fireEvent.click(screen.getByRole('button', { name: 'View First Movie' }));
+        const panel = screen.getByRole('region', { name: 'First Movie overview' });
+        await within(panel).findByText('Actor One');
+        expect(within(panel).getByText('The hero')).toBeTruthy();
+        expect(within(panel).getByText('Audience rating')).toBeTruthy();
+        expect(within(panel).getByText('10:30')).toBeTruthy();
+        expect(within(panel).getByRole('link', { name: 'Book tickets for First Movie on 2026-10-25' }).getAttribute('href')).toBe('/movie/101/2026-10-25');
+        expect(mocks.fetchShow).toHaveBeenCalledWith('101');
+        fireEvent.click(screen.getByRole('button', { name: 'Close overview' }));
+        expect(screen.queryByRole('region', { name: 'First Movie overview' })).toBeNull();
+    });
+    it('handles unavailable screenings and retries a failed fetch within the item', async () => {
+        mocks.fetchShow.mockResolvedValueOnce(undefined).mockResolvedValueOnce({ success: true, movie, dateTime: {} });
+        mount(<Blog />);
+        fireEvent.click(screen.getByRole('button', { name: 'View First Movie' }));
+        await screen.findByRole('alert');
+        fireEvent.click(screen.getByRole('button', { name: 'Retry screenings' }));
+        await screen.findByText('No screenings currently available.');
+        expect(screen.queryByRole('link', { name: /Book tickets for/ })).toBeNull();
+    });
+    it('ignores a late response for a movie that has been closed', async () => {
+        let resolve;
+        mocks.fetchShow.mockReturnValue(new Promise(done => { resolve = done; }));
+        mount(<Blog />);
+        fireEvent.click(screen.getByRole('button', { name: 'View First Movie' }));
+        fireEvent.click(screen.getByRole('button', { name: 'Close overview' }));
+        resolve({ success: true, movie, dateTime: {} });
+        await waitFor(() => expect(screen.queryByRole('region', { name: 'First Movie overview' })).toBeNull());
+    });
     it('fetches the trailer by backend _id and only plays a YouTube trailer', async () => {
         mocks.fetchShow.mockResolvedValue({ success: true, trailer: [{ site: 'Vimeo', type: 'Trailer', key: 'wrong' }, { site: 'YouTube', type: 'Trailer', key: 'right' }] });
         mount(<CatalogMovieCard movie={movie} />);
