@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { useAuth, useUser } from "@clerk/clerk-react";
 import { useLocation, useNavigate } from "react-router";
 
@@ -8,14 +8,15 @@ import { fetchIsAdmin, fetchDashboardData, getAllShows, getAllBookings } from "@
 import { fetchNowPlayingMovies, fetchShows } from "@/services/showService";
 import { fetchFavoriteMovies, getMyBookings } from "@/services/userService";
 
-axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
+// Vite and Vercel forward /api to the backend so browsers use the same origin.
+axios.defaults.baseURL = '';
 
 const AppContext = createContext();
 
 function AppProvider({ children }) {
 
-    const image_base_url = import.meta.env.VITE_TMDB_IMAGE_BASE_URL;
-    const trailer_base_url = import.meta.env.VITE_TRAILER_YTB_URL;
+    const image_base_url = import.meta.env.VITE_TMDB_IMAGE_BASE_URL || 'https://image.tmdb.org/t/p/original';
+    const trailer_base_url = import.meta.env.VITE_TRAILER_YTB_URL || 'https://www.youtube.com/embed/';
 
     // ======================= ADMIN API (/api/admin) ==============================
     const [isAdmin, setIsAdmin] = useState(false);
@@ -26,6 +27,9 @@ function AppProvider({ children }) {
     // ======================= SHOW API (/api/show) ==============================
     const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
     const [shows, setShows] = useState([]);
+    const [showsLoading, setShowsLoading] = useState(true);
+    const [showsError, setShowsError] = useState('');
+    const reloadShows = useCallback(() => fetchShows({ setShows, setShowsLoading, setShowsError }), []);
 
     // ======================= USER API (/api/user) ==============================
     const [favoriteMovies, setFavoriteMovies] = useState([]);
@@ -55,14 +59,14 @@ function AppProvider({ children }) {
     }, [user, navigate]);
 
     useEffect(() => {
-        fetchShows({ setShows });
-    }, [navigate]);
+        reloadShows();
+    }, [reloadShows]);
 
     const value = {
         // admin routes 
         isAdmin, listShows, dashboardData, listBookings,
         // show routes
-        shows, nowPlayingMovies,
+        shows, nowPlayingMovies, showsLoading, showsError, reloadShows,
         // user routes 
         favoriteMovies, bookings,
         // generate

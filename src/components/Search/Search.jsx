@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import { CircleXIcon, LoaderIcon, SearchIcon, XIcon } from "lucide-react";
-import { useCallback, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 import styles from "./Search.module.scss";
 import Button from "../Button";
@@ -10,9 +10,7 @@ const cx = classNames.bind(styles);
 function Search({ setBtnShowSearch }) {
 
     const [searchValue, setSearchValue] = useState('') // two way binding (input search)
-    const [searchResult, setSearchResult] = useState([]) // search result
-    const [showResult, setShowResult] = useState(false) // show result search
-    const [loading, setLoading] = useState(false) // show status load
+    const loading = false;
 
     // const debouncedValue = useDebounce(searchValue, 500) // delay action 
 
@@ -68,7 +66,6 @@ function Search({ setBtnShowSearch }) {
                     placeholder="Search movie name..."
                     spellCheck={false}
                     onChange={e => setSearchValue(e.target.value.trimStart())} // ko nhap dau cach dau tien
-                    onFocus={() => setShowResult(true)}
                 />
 
                 {!!searchValue && !loading && (

@@ -18,4 +18,12 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://movie-ticket-booking-app-backend-kfeo.onrender.com',
+        changeOrigin: true,
+      },
+    },
+  },
 })

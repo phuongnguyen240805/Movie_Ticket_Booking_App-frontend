@@ -33,6 +33,7 @@ function MovieDetails() {
     const navigate = useNavigate();
     const { id } = useParams();
     const [show, setShow] = useState(null);
+    const [error, setError] = useState('');
     const [trailerKey, setTrailerKey] = useState();
     const [showTrailer, setShowTrailer] = useState(false);
     const [intro, setIntro] = useState([]);
@@ -42,9 +43,10 @@ function MovieDetails() {
             // [GET]: /api/show/:showId
             const data = await fetchShow(id);
 
-            if (data.success) setShow(data);
+            if (!data?.success || !data.movie) throw new Error(data?.message || 'Movie unavailable');
+            setShow(data);
         } catch (error) {
-            console.error(error.message);
+            setError(error.message);
         }
     };
 
@@ -79,7 +81,9 @@ function MovieDetails() {
 
     useEffect(() => {
         if (!id) return;
-
+        setShow(null);
+        setError('');
+        setShowTrailer(false);
         getShow({ id, setShow });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
@@ -90,6 +94,11 @@ function MovieDetails() {
 
         setIntro(randomShows);
     }, [navigate, shows]);
+
+    if (error) return <div role="alert" className="pt-40 px-6 text-center min-h-[70vh]">
+        <p>{error}</p>
+        <Button primary className="mt-4" onClick={() => navigate(routesConfig.moviesPage)}>Browse movies</Button>
+    </div>;
 
     return show ? (
         <div className="px-6 md:px-16 lg:px-40 pt-30 md:pt-50">
@@ -120,21 +129,22 @@ function MovieDetails() {
                             secondary
                             leftIcon={<PlayCircleIcon className="w-5 h-5" />}
                             className="px-7 py-3 text-sm "
+                            disabled={!trailerKey}
                             onClick={() => setShowTrailer(true)}
                         >
-                            Watch Trailer
+                            {trailerKey ? 'Watch Trailer' : 'Trailer unavailable'}
                         </Button>
                         {showTrailer && (
                             // show trailer
                             <TrailerModal url={trailer_base_url + trailerKey} onClose={() => setShowTrailer(false)} />
                         )}
 
-                        <Button
+                        {Object.keys(show.dateTime || {}).length > 0 && <Button
                             primary
                             href="#dateSelect"
                             className={cx("btn-ticket", "px-10 py-3 text-sm ")}>
                             Buy Tickets
-                        </Button>
+                        </Button>}
 
                         <Button
                             rounded
@@ -160,7 +170,7 @@ function MovieDetails() {
                 </div>
             </div>
 
-            <DateSelect dateTime={show.dateTime} id={id} />
+            {Object.keys(show.dateTime || {}).length > 0 ? <DateSelect dateTime={show.dateTime} id={id} /> : <p className="mt-10 text-gray-400">No screenings currently available.</p>}
 
             <p className="text-lg font-medium mt-20 mb-8">You May Also Like</p>
             <div className="flex justify-center flex-wrap max-sm:justify-center gap-8">

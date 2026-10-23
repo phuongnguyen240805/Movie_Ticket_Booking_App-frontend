@@ -1,17 +1,21 @@
 import axios from "axios";
-import toast from "react-hot-toast";
 
 // [GET]: /api/show/all
-export const fetchShows = async ({ setShows }) => {
+export const fetchShows = async ({ setShows, setShowsLoading = () => {}, setShowsError = () => {} }) => {
+    setShowsLoading(true);
+    setShowsError('');
     try {
         const { data } = await axios.get('/api/show/all');
-        if (data.success) {
-            setShows(data.shows);
+        if (data.success && Array.isArray(data.shows)) {
+            // A movie can appear once per scheduled show in the backend response.
+            setShows([...new Map(data.shows.filter(movie => movie?._id).map(movie => [movie._id, movie])).values()]);
         } else {
-            toast.error(data.message);
+            setShowsError(data.message || 'Unable to load movies. Please try again.');
         }
     } catch (error) {
-        console.error(error.message);
+        setShowsError(error.message || 'Unable to load movies. Please try again.');
+    } finally {
+        setShowsLoading(false);
     }
 };
 

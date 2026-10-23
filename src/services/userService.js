@@ -8,7 +8,9 @@ export const fetchFavoriteMovies = async ({ getToken, setFavoriteMovies }) => {
             headers: { Authorization: `Bearer ${await getToken()}` }
         });
 
-        data.success ? setFavoriteMovies(data?.movies) : toast.error(data.message);
+        data.success && Array.isArray(data.movies)
+            ? setFavoriteMovies(data.movies)
+            : toast.error(data.message || 'Unable to load favorites');
     } catch (error) {
         console.error(error.message);
     }
