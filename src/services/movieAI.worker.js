@@ -34,7 +34,7 @@ async function handle({ id, type, movies = [], query }) {
         }
         self.postMessage({ id, results });
     } catch {
-        self.postMessage({ id, error: 'Không tải hoặc chạy được mô hình AI. Kiểm tra kết nối và thử lại; tìm kiếm thông thường vẫn hoạt động.', modelReady: Boolean(extractor) });
+        self.postMessage({ id, error: 'Chưa thể khởi động trợ lý. Kiểm tra kết nối và thử lại nhé.', modelReady: Boolean(extractor) });
     }
 }
 

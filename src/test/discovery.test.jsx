@@ -4,6 +4,7 @@ import { MemoryRouter, useLocation } from 'react-router-dom';
 import Search from '@/components/Search/Search';
 import MovieAssistant from '@/components/MovieAssistant';
 import SimilarMovies from '@/components/SimilarMovies';
+import MovieAIStatus from '@/components/MovieAIStatus';
 import { queryConstraints, rankSemanticResults, searchMovies, similarByGenre } from '@/lib/movieDiscovery';
 
 const mocks = vi.hoisted(() => ({ context: {}, ai: { status: 'ready', error: '', progress: 100 }, discover: vi.fn(), initialize: vi.fn(), fetchShow: vi.fn() }));
@@ -77,6 +78,19 @@ describe('backend catalogue search', () => {
 });
 
 describe('AI recommendations and cinema assistant', () => {
+    it('removes the startup panel entirely when initialization finishes', () => {
+        mocks.ai = { status: 'loading', progress: 65, error: '' };
+        const view = render(<MovieAIStatus />);
+        expect(screen.getByRole('progressbar').getAttribute('aria-valuenow')).toBe('65');
+        mocks.ai = { status: 'ready', progress: 100, error: '' };
+        view.rerender(<MovieAIStatus />);
+        expect(view.container.innerHTML).toBe('');
+        mount(<MovieAssistant />);
+        fireEvent.click(screen.getByRole('button', { name: 'Mở trợ lý chọn phim' }));
+        const chat = screen.getByRole('dialog');
+        expect(within(chat).queryByText(/ngữ nghĩa|mô hình|trình duyệt|120 MB/)).toBeNull();
+        expect(within(chat).queryByRole('button', { name: 'Bật AI chọn phim' })).toBeNull();
+    });
     it('respects explicit Vietnamese negative genre and duration constraints', () => {
         expect(queryConstraints('Hành động, không kinh dị, dưới 120 phút')).toEqual({ excluded: ['Horror'], preferred: ['Action'], maxRuntime: 120 });
         const results = [{ id: '1', score: 0.4 }, { id: '3', score: 0.9 }];
@@ -88,7 +102,7 @@ describe('AI recommendations and cinema assistant', () => {
         mocks.discover.mockResolvedValue([{ id: '1', score: 1 }, { id: '2', score: 0.8 }, { id: '3', score: 0.3 }]);
         mount(<SimilarMovies movie={movie} />);
         fireEvent.click(screen.getByRole('button', { name: 'Gợi ý bằng AI' }));
-        await screen.findByText(/AI so sánh nội dung/);
+        await screen.findByText(/Những bộ phim có câu chuyện/);
         expect(screen.getByText('Funny Friends')).toBeTruthy();
         expect(screen.queryByText('Sky Warriors')).toBeNull();
     });

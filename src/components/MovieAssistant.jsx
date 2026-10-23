@@ -43,15 +43,15 @@ function AssistantPanel({ onClose }) {
         finally { if (run.current === current) setBusy(false); }
     };
     const available = status === 'ready' && !busy && !showsLoading && !showsError && shows.length > 0;
-    return <section ref={ref} role="dialog" aria-modal="true" aria-label="Trợ lý chọn phim" className="fixed z-[90] bottom-56 right-3 sm:right-10 w-[calc(100vw-24px)] sm:w-[420px] max-h-[calc(100dvh-244px)] h-[620px] flex flex-col overflow-hidden rounded-2xl bg-[#10121c]/85 backdrop-blur-xl border border-white/10 shadow-2xl">
+    return <section ref={ref} role="dialog" aria-modal="true" aria-label="Trợ lý chọn phim" className="movie-ai-typography fixed z-[90] bottom-56 right-3 sm:right-10 w-[calc(100vw-24px)] sm:w-[420px] max-h-[calc(100dvh-244px)] h-[620px] flex flex-col overflow-hidden rounded-2xl bg-[#10121c]/85 backdrop-blur-xl border border-white/10 shadow-2xl">
         <header className="flex items-center gap-3 p-4 border-b border-white/10 bg-primary/5">
             <span className="rounded-xl p-2 bg-primary/15 text-primary"><Sparkles className="w-5 h-5" /></span>
-            <div className="flex-1"><h2 className="font-semibold text-sm">Trợ lý chọn phim</h2><p className="text-[11px] text-gray-400">AI ngữ nghĩa · Dữ liệu phim từ rạp</p></div>
+            <h2 className="flex-1 font-semibold text-sm leading-relaxed">Trợ lý chọn phim</h2>
             <button aria-label="Bắt đầu lại" onClick={() => { run.current += 1; setMessages([]); setError(''); setBusy(false); setSelected(null); }} className="p-1.5 hover:bg-white/5 rounded-full"><RotateCcw className="w-4" /></button>
             <button aria-label="Đóng trợ lý" onClick={onClose} className="p-1.5 hover:bg-white/5 rounded-full"><XIcon className="w-5" /></button>
         </header>
         <div className="p-4 overflow-y-auto flex-1 min-h-0 space-y-4">
-            <p className="text-sm text-gray-300 leading-relaxed">Bạn muốn xem gì hôm nay? Mình giúp tìm phim theo sở thích, nội dung và diễn viên. Lịch chiếu luôn lấy từ rạp; giá vé được xác nhận khi đặt vé.</p>
+            {!messages.length && <p className="text-sm text-gray-300 leading-relaxed">Hôm nay bạn muốn xem gì? Kể mình nghe thể loại hoặc tâm trạng của bạn nhé.</p>}
             <MovieAIStatus />
             {showsLoading && <p role="status" className="text-xs text-gray-400">Đang tải danh sách phim…</p>}
             {showsError && <div role="alert" className="text-xs"><p>{showsError}</p><button onClick={reloadShows} className="text-primary mt-2">Tải lại phim</button></div>}
@@ -70,7 +70,7 @@ function AssistantPanel({ onClose }) {
                     {selected === `${index}:${movie._id}` && <AssistantScreenings movieId={movie._id} onNavigate={onClose} />}
                 </div>)}
             </div>)}</div>
-            {busy && <p role="status" className="flex gap-2 text-xs text-gray-400"><LoaderCircle className="w-4 animate-spin" />AI đang so sánh nội dung phim…</p>}
+            {busy && <p role="status" className="flex gap-2 text-sm text-gray-400"><LoaderCircle className="w-4 shrink-0 animate-spin" />Đang tìm phim hợp gu bạn…</p>}
             {error && <p role="alert" className="text-xs text-gray-300">{error} Bạn có thể nhập lại yêu cầu để thử lần nữa.</p>}
         </div>
         <form onSubmit={event => { event.preventDefault(); ask(input); }} className="p-3 border-t border-white/10 flex gap-2">

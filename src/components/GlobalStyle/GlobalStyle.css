@@ -67,6 +67,12 @@ html *::-webkit-scrollbar-track {
     scrollbar-width: none;
 }
 
+/* Keep Vietnamese letters and accents in one consistent font throughout AI UI. */
+.movie-ai-typography {
+    --font-family: "Montserrat", "Segoe UI", Arial, sans-serif;
+    font-family: var(--font-family);
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     /* Loại bỏ nút tăng giảm */
