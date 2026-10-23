@@ -5,6 +5,7 @@ import { useAppContext } from '@/context/AppContext';
 import { routesConfig } from '@/configs';
 import Image from '@/components/Image';
 import timeFormat from '@/lib/timeFormat';
+import SimilarMovies from '@/components/SimilarMovies';
 
 export default function MovieHubDetails({ movie }) {
     const { image_base_url } = useAppContext();
@@ -63,5 +64,6 @@ export default function MovieHubDetails({ movie }) {
                     </div>)}
                 </div> : <p className="text-sm text-gray-400 mt-3">No screenings currently available.</p>}
         </div>
+        <SimilarMovies movie={film} />
     </section>;
 }

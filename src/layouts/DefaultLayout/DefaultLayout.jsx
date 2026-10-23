@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import MovieAssistant from '@/components/MovieAssistant';
 
 import { Toaster } from "react-hot-toast";
 
@@ -11,6 +12,7 @@ function DefaultLayout({ children }) {
             <Navbar />
             {children}
             <Footer />
+            <MovieAssistant />
         </>
     );
 }

@@ -21,7 +21,15 @@ Both pages use compact movie cards. MovieHub opens an inline notebook under the 
 
 The backend has no article feed, separate upcoming catalogue or reminder endpoint. Sample articles, broken article links and simulated reminders have been removed. Releases lists films with scheduled screenings; it does not claim to be a complete upcoming-movie feed. No backend changes are required.
 
-## Checks
+## Frontend search and AI discovery
+
+The navbar search uses the shared public `GET /api/show/all` response, with loading/error/retry states. It searches full titles, summaries, genres and all cast names with accent-insensitive matching. The backend has no search route; no invented API endpoint is called.
+
+The floating movie assistant and similar-movie sections use Transformers.js with `Xenova/paraphrase-multilingual-MiniLM-L12-v2` (quantized ONNX). A Web Worker runs multilingual semantic embeddings locally through WASM; it does not need WebGPU or API keys. The model is only downloaded after the user enables AI (approximately 118 MB plus the WASM runtime). Browser cache availability and device memory/performance affect subsequent loads. Embeddings are cached in worker memory with a bounded size. Model loading, inference failure and timeout states preserve ordinary search and genre-based recommendations.
+
+This is a cinema-specific semantic assistant, not a general-purpose generative chatbot. It ranks the existing catalogue, applies explicit genre exclusions/runtime limits and presents grounded response templates. Follow-up preferences are retained for the current open conversation. Favorites can supply optional recommendation context. No prompts, favorites or embeddings are sent to an AI API; Hugging Face supplies model assets. Screening buttons fetch the existing movie-detail endpoint and preserve backend date keys in seat-selection links while displaying Vietnam time. It does not invent films, showtimes or prices.
+
+## Verification
 
 - `npm test`: component and service tests for public browsing, filters, pagination, calendar, retries, trailer selection and authenticated favorite persistence/error responses.
 - `npm run lint`

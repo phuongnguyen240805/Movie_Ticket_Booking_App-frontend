@@ -2,7 +2,6 @@ import BlurCircle from "@/components/BlurCircle";
 import Button from "@/components/Button";
 import DateSelect from "@/components/DateSelect";
 import Loading from "@/components/Loading";
-import MovieCard from "@/components/MovieCard";
 import { routesConfig } from "@/configs";
 import timeFormat from "@/lib/timeFormat";
 import styles from "./MovieDetails.module.scss";
@@ -12,6 +11,7 @@ import { fetchFavoriteMovies, updateFavorite } from "@/services/userService";
 import { fetchShow } from "@/services/showService";
 import useTitle from "@/hooks";
 import Image from "@/components/Image";
+import SimilarMovies from '@/components/SimilarMovies';
 
 import classNames from "classnames/bind";
 import { Heart, PlayCircleIcon, StarIcon } from "lucide-react";
@@ -26,7 +26,7 @@ function MovieDetails() {
     useTitle('Movie Ticket Booking - Movie Details');
 
     const {
-        user, shows, image_base_url, trailer_base_url,
+        user, image_base_url, trailer_base_url,
         getToken, favoriteMovies, setFavoriteMovies,
     } = useAppContext();
 
@@ -36,7 +36,6 @@ function MovieDetails() {
     const [error, setError] = useState('');
     const [trailerKey, setTrailerKey] = useState();
     const [showTrailer, setShowTrailer] = useState(false);
-    const [intro, setIntro] = useState([]);
 
     const getShow = async () => {
         try {
@@ -88,12 +87,6 @@ function MovieDetails() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
-    // get ramdom film intro
-    useEffect(() => {
-        const randomShows = shows.slice().sort(() => Math.random() - 0.5).slice(0, 4);
-
-        setIntro(randomShows);
-    }, [navigate, shows]);
 
     if (error) return <div role="alert" className="pt-40 px-6 text-center min-h-[70vh]">
         <p>{error}</p>
@@ -172,12 +165,7 @@ function MovieDetails() {
 
             {Object.keys(show.dateTime || {}).length > 0 ? <DateSelect dateTime={show.dateTime} id={id} /> : <p className="mt-10 text-gray-400">No screenings currently available.</p>}
 
-            <p className="text-lg font-medium mt-20 mb-8">You May Also Like</p>
-            <div className="flex justify-center flex-wrap max-sm:justify-center gap-8">
-                {intro.map((movie, index) => (
-                    <MovieCard key={index} movie={movie} />
-                ))}
-            </div>
+            <SimilarMovies movie={show.movie} />
 
             <div className="flex justify-center mt-20">
                 <Button

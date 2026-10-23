@@ -94,10 +94,9 @@ function Navbar() {
 
             <div className="flex items-center gap-8">
                 {/* Search */}
-                <SearchIcon
-                    onClick={() => setBtnShowSearch(!btnShowSearch)}
-                    className='w-6 h-6 cursor-pointer'
-                />
+                <button aria-label="Search movies" onClick={() => setBtnShowSearch(!btnShowSearch)} className="p-1">
+                    <SearchIcon className='w-6 h-6' />
+                </button>
                 {btnShowSearch && <Search setBtnShowSearch={setBtnShowSearch} />}
 
                 {
