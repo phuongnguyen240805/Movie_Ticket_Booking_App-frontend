@@ -32,7 +32,7 @@ export default function Search({ setBtnShowSearch }) {
                 {hasQuery && showsLoading && <LoaderCircle className={cx('loading')} width={20} />}
                 <button type="submit" aria-label="Find movies" className={cx('search-btn')}><SearchIcon /></button>
             </form>
-            {hasQuery && <div id="movie-search-results" className="absolute top-full mt-3 w-full max-h-[60dvh] overflow-y-auto rounded-2xl border border-white/10 bg-[#10121c] shadow-2xl p-3">
+            {hasQuery && <div id="movie-search-results" className="absolute top-full mt-3 w-full max-h-[60dvh] overflow-y-auto no-scrollbar rounded-2xl border border-white/10 bg-[#10121c]/80 backdrop-blur-xl shadow-2xl p-3">
                 {showsLoading ? <p role="status" className="flex gap-2 p-5 text-gray-400"><LoaderCircle className="w-4 animate-spin" />Loading movies…</p> : showsError ? <div role="alert" className="p-5"><p>{showsError}</p><button onClick={reloadShows} className="text-primary mt-3">Try again</button></div> : <>
                     <p aria-live="polite" className="px-2 pb-2 text-xs text-gray-400">{results.length} movies found</p>
                     {!results.length && <p className="py-8 text-center text-sm text-gray-400">No matching movies. Try another title or actor.</p>}
