@@ -43,7 +43,7 @@ function AssistantPanel({ onClose }) {
         finally { if (run.current === current) setBusy(false); }
     };
     const available = status === 'ready' && !busy && !showsLoading && !showsError && shows.length > 0;
-    return <section ref={ref} role="dialog" aria-modal="true" aria-label="Trợ lý chọn phim" className="fixed z-[90] bottom-40 right-3 sm:right-6 w-[calc(100vw-24px)] sm:w-[420px] max-h-[calc(100dvh-180px)] h-[620px] flex flex-col overflow-hidden rounded-2xl bg-[#10121c] border border-white/10 shadow-2xl">
+    return <section ref={ref} role="dialog" aria-modal="true" aria-label="Trợ lý chọn phim" className="fixed z-[90] bottom-56 right-3 sm:right-10 w-[calc(100vw-24px)] sm:w-[420px] max-h-[calc(100dvh-244px)] h-[620px] flex flex-col overflow-hidden rounded-2xl bg-[#10121c] border border-white/10 shadow-2xl">
         <header className="flex items-center gap-3 p-4 border-b border-white/10 bg-primary/5">
             <span className="rounded-xl p-2 bg-primary/15 text-primary"><Sparkles className="w-5 h-5" /></span>
             <div className="flex-1"><h2 className="font-semibold text-sm">Trợ lý chọn phim</h2><p className="text-[11px] text-gray-400">AI ngữ nghĩa · Dữ liệu phim từ rạp</p></div>
@@ -84,8 +84,8 @@ export default function MovieAssistant() {
     const [open, setOpen] = useState(false);
     const close = useCallback(() => setOpen(false), []);
     return <>
-        <button aria-label={open ? 'Đóng trợ lý chọn phim' : 'Mở trợ lý chọn phim'} aria-expanded={open} onClick={() => setOpen(value => !value)} className="fixed z-[80] bottom-24 right-6 flex items-center gap-2 bg-primary rounded-full px-4 py-3 shadow-lg hover:bg-primary-dull transition-colors">
-            <Sparkles className="w-5 h-5" /><span className="text-sm font-medium">AI chọn phim</span>
+        <button aria-label={open ? 'Đóng trợ lý chọn phim' : 'Mở trợ lý chọn phim'} title="AI chọn phim" aria-expanded={open} onClick={() => setOpen(value => !value)} className="group fixed z-[80] bottom-38 right-10 w-14 h-14 flex items-center justify-center bg-primary rounded-full shadow-lg hover:bg-primary-dull transition-colors">
+            <Sparkles className="w-6 h-6 group-hover:scale-110 transition-transform" />
         </button>
         {open && <AssistantPanel onClose={close} />}
     </>;

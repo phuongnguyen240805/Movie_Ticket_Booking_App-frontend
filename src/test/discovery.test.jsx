@@ -38,6 +38,7 @@ describe('backend catalogue search', () => {
     it('handles loading, backend failure, retry and no results', () => {
         mocks.context.showsLoading = true;
         const view = mount(<Search setBtnShowSearch={vi.fn()} />);
+        fireEvent.change(screen.getByRole('textbox'), { target: { value: 'sky' } });
         expect(screen.getByRole('status')).toBeTruthy();
         mocks.context.showsLoading = false; mocks.context.showsError = 'Offline';
         view.rerender(<MemoryRouter><Search setBtnShowSearch={vi.fn()} /></MemoryRouter>);
@@ -55,11 +56,23 @@ describe('backend catalogue search', () => {
         fireEvent.change(input, { target: { value: 'sky' } });
         fireEvent.click(screen.getByRole('button', { name: 'Clear search' }));
         expect(input.value).toBe('');
+        expect(screen.queryByRole('link')).toBeNull();
         fireEvent.change(input, { target: { value: 'sky' } });
         fireEvent.submit(input.closest('form'));
         expect(screen.getByTestId('location').textContent).toBe('/movie/1');
         fireEvent.keyDown(input, { key: 'Escape' });
         expect(close).toHaveBeenCalledWith(false);
+    });
+    it('keeps the dropdown hidden until a non-empty query is entered', () => {
+        mount(<Search setBtnShowSearch={vi.fn()} />);
+        const input = screen.getByRole('textbox');
+        expect(screen.queryByRole('link')).toBeNull();
+        fireEvent.submit(input.closest('form'));
+        expect(screen.getByTestId('location').textContent).toBe('/');
+        fireEvent.change(input, { target: { value: 'sky' } });
+        expect(screen.getByRole('link', { name: /Sky Warriors/ })).toBeTruthy();
+        fireEvent.change(input, { target: { value: '   ' } });
+        expect(screen.queryByRole('link')).toBeNull();
     });
 });
 
