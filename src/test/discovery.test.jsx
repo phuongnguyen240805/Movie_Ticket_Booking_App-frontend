@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { MemoryRouter, useLocation } from 'react-router-dom';
 import Search from '@/components/Search/Search';
 import MovieAssistant from '@/components/MovieAssistant';
@@ -17,6 +17,7 @@ const horror = { ...movie, _id: '3', title: 'Dark Planet', genres: [{ name: 'Act
 function Location() { return <p data-testid="location">{useLocation().pathname}</p>; }
 const mount = element => render(<MemoryRouter>{element}<Location /></MemoryRouter>);
 afterEach(cleanup);
+afterEach(() => vi.useRealTimers());
 beforeEach(() => {
     mocks.ai = { status: 'ready', error: '', progress: 100 };
     mocks.context = { shows: [movie, comedy, horror], showsLoading: false, showsError: '', reloadShows: vi.fn(), image_base_url: '', favoriteMovies: [] };
@@ -93,6 +94,7 @@ describe('AI recommendations and cinema assistant', () => {
     });
     it('respects explicit Vietnamese negative genre and duration constraints', () => {
         expect(queryConstraints('Hành động, không kinh dị, dưới 120 phút')).toEqual({ excluded: ['Horror'], preferred: ['Action'], maxRuntime: 120 });
+        expect(queryConstraints('Mình không muốn xem phim kinh dị').excluded).toEqual(['Horror']);
         const results = [{ id: '1', score: 0.4 }, { id: '3', score: 0.9 }];
         expect(rankSemanticResults([movie, horror], results, { query: 'Hành động, không kinh dị' }).map(item => item.movie._id)).toEqual(['1']);
         expect(rankSemanticResults([movie, horror], results, { sourceId: '1' }).map(item => item.movie._id)).toEqual(['3']);
@@ -125,7 +127,7 @@ describe('AI recommendations and cinema assistant', () => {
         fireEvent.change(screen.getByRole('textbox'), { target: { value: 'Hành động, không kinh dị' } });
         fireEvent.submit(screen.getByRole('textbox').closest('form'));
         const log = screen.getByRole('log');
-        await within(log).findByText('Sky Warriors');
+        await within(log).findByText('Sky Warriors', {}, { timeout: 3000 });
         expect(within(log).queryByText('Dark Planet')).toBeNull();
         fireEvent.click(screen.getByRole('button', { name: 'Lịch chiếu & đặt vé →' }));
         const booking = await screen.findByRole('link', { name: /Đặt vé/ });
@@ -144,5 +146,44 @@ describe('AI recommendations and cinema assistant', () => {
         fireEvent.submit(screen.getByRole('textbox').closest('form'));
         await waitFor(() => expect(screen.getByRole('alert').textContent).toContain('AI unavailable'));
         expect(within(screen.getByRole('log')).queryByRole('link')).toBeNull();
+    });
+    it('keeps the thinking indicator visible for 1.5 seconds and offers working follow-up choices', async () => {
+        vi.useFakeTimers();
+        const alternative = { ...movie, _id: '4', title: 'Another Adventure', runtime: 80 };
+        mocks.context.shows.push(alternative);
+        mocks.discover.mockResolvedValueOnce([{ id: '1', score: 0.9 }]).mockResolvedValueOnce([{ id: '4', score: 0.9 }]).mockResolvedValueOnce([{ id: '2', score: 0.9 }]);
+        mount(<MovieAssistant />);
+        fireEvent.click(screen.getByRole('button', { name: 'Mở trợ lý chọn phim' }));
+        fireEvent.change(screen.getByRole('textbox'), { target: { value: 'Phim hành động' } });
+        fireEvent.submit(screen.getByRole('textbox').closest('form'));
+        expect(screen.getByRole('status').textContent).toContain('Mình đang chọn phim');
+        await act(async () => { await vi.advanceTimersByTimeAsync(1499); });
+        expect(screen.queryByRole('link', { name: 'Sky Warriors' })).toBeNull();
+        expect(screen.queryByRole('region', { name: 'Gợi ý tiếp theo' })).toBeNull();
+        await act(async () => { await vi.advanceTimersByTimeAsync(1); });
+        expect(screen.getByRole('link', { name: 'Sky Warriors' })).toBeTruthy();
+        expect(screen.queryByRole('status')).toBeNull();
+        fireEvent.click(screen.getByRole('button', { name: 'Gợi ý phim khác' }));
+        expect(mocks.discover.mock.calls[1][0].map(movie => movie._id)).not.toContain('1');
+        await act(async () => { await vi.advanceTimersByTimeAsync(1500); });
+        expect(screen.getByRole('link', { name: 'Another Adventure' })).toBeTruthy();
+        fireEvent.click(screen.getByRole('button', { name: 'Đổi thể loại' }));
+        fireEvent.click(screen.getByRole('button', { name: 'Hài hước' }));
+        expect(mocks.discover.mock.calls[2][1]).toBe('Gợi ý phim hài hước');
+        await act(async () => { await vi.advanceTimersByTimeAsync(1500); });
+        expect(screen.getByRole('link', { name: 'Funny Friends' })).toBeTruthy();
+    });
+    it('does not reveal a delayed answer after starting over', async () => {
+        vi.useFakeTimers();
+        mocks.discover.mockResolvedValue([{ id: '1', score: 0.9 }]);
+        mount(<MovieAssistant />);
+        fireEvent.click(screen.getByRole('button', { name: 'Mở trợ lý chọn phim' }));
+        fireEvent.change(screen.getByRole('textbox'), { target: { value: 'action' } });
+        fireEvent.submit(screen.getByRole('textbox').closest('form'));
+        fireEvent.click(screen.getByRole('button', { name: 'Bắt đầu lại' }));
+        await act(async () => { await vi.advanceTimersByTimeAsync(2000); });
+        expect(screen.queryByRole('link', { name: 'Sky Warriors' })).toBeNull();
+        expect(screen.queryByRole('status')).toBeNull();
+        expect(screen.getByRole('button', { name: 'Phim hài để xem cùng bạn bè' })).toBeTruthy();
     });
 });

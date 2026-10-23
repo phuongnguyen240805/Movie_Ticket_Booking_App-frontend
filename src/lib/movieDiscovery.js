@@ -31,7 +31,7 @@ export function queryConstraints(query) {
     const excluded = [];
     const preferred = [];
     for (const [genre, words] of genres) {
-        if (words.some(word => new RegExp(`(?:khong(?: thich| muon| xem)?|tranh|no|not|without)\\s+${word}`).test(text))) excluded.push(genre);
+        if (words.some(word => new RegExp(`(?:khong(?:\\s+(?:thich|muon|xem|phim))*|tranh(?:\\s+phim)?|no|not|without)\\s+${word}`).test(text))) excluded.push(genre);
         else if (words.some(word => text.includes(word))) preferred.push(genre);
     }
     const minutes = text.match(/(?:duoi|under|less than)\s+(\d+)\s*(?:phut|minutes|min)/);
